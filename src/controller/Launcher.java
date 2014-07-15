@@ -29,5 +29,7 @@ public class Launcher
         window.setVisible( true );
         
         TrayIcon.getInstance();
+        
+        ConfigurationManager.getInstance();
     }
 }

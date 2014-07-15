@@ -103,7 +103,7 @@ public class TrayIcon
             {
                 if ( e.getButton() == MouseEvent.BUTTON1 )
                 {
-                    ApplicationController.getInstance().showDialog();
+                    ApplicationController.getInstance().toggleDialog();
                 }
             }
         });
@@ -132,7 +132,7 @@ public class TrayIcon
             public void actionPerformed( ActionEvent e )
             {
                 tray.remove( trayIcon );
-                System.exit( 0 );
+                ApplicationController.getInstance().exit();
             }
         } );
     }

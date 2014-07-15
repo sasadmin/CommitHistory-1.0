@@ -97,4 +97,47 @@ public class ApplicationController
         TrayDialog.getInstance().setVisible( false );
         TrayIcon.getInstance().updateActions( false );
     }
+    
+    /**
+     * toggleDialog
+     * 
+     */
+    public void toggleDialog()
+    {
+        boolean visible = TrayDialog.getInstance().isVisible();
+        
+        TrayDialog.getInstance().setVisible( !visible );
+        TrayIcon.getInstance().updateActions( !visible );
+    }
+    
+    /**
+     * handleException
+     * 
+     * @param e Exception
+     */
+    public void handleException( Exception e )
+    {
+        e.printStackTrace();
+    }
+    
+    /**
+     * exit
+     * 
+     */
+    public void exit()
+    {
+        try
+        {
+            ConfigurationManager.getInstance().save();
+        }
+        catch ( Exception e )
+        {
+            handleException( e );            
+        }
+                
+        finally
+        {
+            System.exit( 0 );
+        }
+    }
 }
