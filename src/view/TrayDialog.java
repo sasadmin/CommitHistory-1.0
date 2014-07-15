@@ -1,25 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package view;
 
 import controller.ApplicationController;
+import controller.IconFactory;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -41,6 +33,11 @@ public class TrayDialog
         initComponents();
     }
     
+    /**
+     * getInstance
+     * 
+     * @return TrayDialog
+     */
     public static TrayDialog getInstance()
     {
         if ( defaultInstance == null )
@@ -51,6 +48,11 @@ public class TrayDialog
         return defaultInstance;
     }
     
+    /**
+     * getCommit
+     * 
+     * @return Commit
+     */
     public Commit getCommit()
     {
         Commit commit = new Commit();
@@ -60,25 +62,6 @@ public class TrayDialog
         commit.setVersion( versionField.getText() );
         
         return commit;
-    }
-    
-    //Obtain the image URL
-    protected static ImageIcon createImage( String path, String description ) 
-    {
-        URL imageURL = MinimizeButton.class.getResource( path );
-        
-        if (imageURL == null) 
-        {
-            System.err.println( "Resource not found: " + path );
-            return null;
-        } 
-        
-        else 
-        {
-            Image img = new ImageIcon( imageURL ).getImage();
-            
-            return new ImageIcon( img.getScaledInstance( 16, 16, Image.SCALE_SMOOTH ), description );
-        }
     }
     
     /**
@@ -155,12 +138,12 @@ public class TrayDialog
         buttonsPanel.setLayout( new GridBagLayout() );
         
         buttonsPanel.add( saveButton, new GridBagConstraints( 0, 0, 1, 1, 1.0, 0.0, 
-                                                                           GridBagConstraints.SOUTHWEST, GridBagConstraints.NONE, 
-                                                                           new Insets( 10,5,10,10 ), 0, 0 ) );
+                                                              GridBagConstraints.SOUTHWEST, GridBagConstraints.NONE, 
+                                                              new Insets( 10,5,10,10 ), 0, 0 ) );
         
-        buttonsPanel.add( new JButton( createImage( "/resources/menu.png", "menu icon" ) ), new GridBagConstraints( 1, 0, 1, 1, 1.0, 0.0, 
-                                                                    GridBagConstraints.SOUTHEAST, GridBagConstraints.NONE, 
-                                                                    new Insets( 10,10,10,5 ), 0, 0 ) );
+        buttonsPanel.add( menuButton, new GridBagConstraints( 1, 0, 1, 1, 1.0, 0.0, 
+                                                              GridBagConstraints.SOUTHEAST, GridBagConstraints.NONE, 
+                                                              new Insets( 10,10,10,5 ), 0, 0 ) );
         
         saveButton.addActionListener( new ActionListener()
         {
@@ -175,6 +158,7 @@ public class TrayDialog
     private JPanel buttonsPanel = new JPanel();
     
     private JButton saveButton = new JButton( "Salvar" );
+    private JButton menuButton = new JButton( IconFactory.getIcon( "/resources/menu.png", 16 ) );
     
     private JLabel ticketLabel = new JLabel();
     private JLabel revisionLabel = new JLabel();

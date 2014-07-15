@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package view;
 
 import java.awt.Color;
@@ -27,6 +21,11 @@ public class DialogPane
         setBorder( new LineBorder( new Color( 0, 0, 0 ), 1, true ) );
     }
     
+    /**
+     * paintComponent
+     * 
+     * @param g Graphics
+     */
     @Override
     public void paintComponent( Graphics g )
     {

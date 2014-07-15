@@ -1,15 +1,19 @@
 package view;
 
 import controller.ApplicationController;
-import java.awt.*;
+import controller.IconFactory;
+import java.awt.AWTException;
+import java.awt.MenuItem;
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
 import java.awt.TrayIcon.MessageType;
-import java.awt.event.*;
-import java.net.URL;
-import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class TrayIcon
 {
-
     private static TrayIcon defaultInstance;
 
     private TrayIcon()
@@ -17,6 +21,11 @@ public class TrayIcon
         initComponents();
     }
 
+    /**
+     * getInstance
+     * 
+     * @return TrayIcon
+     */
     public static TrayIcon getInstance()
     {
         if ( defaultInstance == null )
@@ -40,23 +49,11 @@ public class TrayIcon
                                  type );
     }
 
-    //Obtain the image URL
-    protected static Image createImage( String path, String description )
-    {
-        URL imageURL = TrayIcon.class.getResource( path );
-
-        if ( imageURL == null )
-        {
-            System.err.println( "Resource not found: " + path );
-            return null;
-        }
-
-        else
-        {
-            return ( new ImageIcon( imageURL, description ) ).getImage();
-        }
-    }
-    
+    /**
+     * updateActions
+     * 
+     * @param isShowingDialog boolean
+     */
     public void updateActions( boolean isShowingDialog )
     {
         openItem.setEnabled( !isShowingDialog );
@@ -64,6 +61,10 @@ public class TrayIcon
         exitItem.setEnabled( true );
     }
 
+    /**
+     * initComponents
+     * 
+     */
     private void initComponents()
     {
         if ( !SystemTray.isSupported() )
@@ -73,7 +74,7 @@ public class TrayIcon
         }
 
         final PopupMenu popup = new PopupMenu();
-        trayIcon = new java.awt.TrayIcon( createImage( "/resources/tray.png", "tray icon" ) );
+        trayIcon = new java.awt.TrayIcon( IconFactory.getImage( "/resources/tray.png" ) );
         final SystemTray tray = SystemTray.getSystemTray();
 
         popup.add( openItem );

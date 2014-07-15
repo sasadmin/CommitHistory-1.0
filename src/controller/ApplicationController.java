@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package controller;
 
 import java.awt.TrayIcon.MessageType;
@@ -23,6 +17,11 @@ public class ApplicationController
     {
     }
     
+    /**
+     * getInstance
+     * 
+     * @return ApplicationController
+     */
     public static ApplicationController getInstance()
     {
         if ( defaultInstance == null )
@@ -33,6 +32,12 @@ public class ApplicationController
         return defaultInstance;
     }
     
+    /**
+     * validateCommit
+     * 
+     * @param commit Commit
+     * @return boolean
+     */
     private boolean validateCommit( Commit commit )
     {
         if ( commit.getTicket().trim().isEmpty() )
@@ -52,6 +57,10 @@ public class ApplicationController
         return true;
     }
     
+    /**
+     * save
+     * 
+     */
     public void save()
     {
         Commit commit = TrayDialog.getInstance().getCommit();
@@ -69,12 +78,20 @@ public class ApplicationController
         
     }
     
+    /**
+     * showDialog
+     * 
+     */
     public void showDialog()
     {
         TrayDialog.getInstance().setVisible( true );
         TrayIcon.getInstance().updateActions( true );
     }
     
+    /**
+     * closeDialog
+     * 
+     */
     public void closeDialog()
     {
         TrayDialog.getInstance().setVisible( false );
