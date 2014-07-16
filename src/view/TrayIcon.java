@@ -89,6 +89,8 @@ public class TrayIcon
         trayIcon.setToolTip( "Commit History" );
         trayIcon.setImageAutoSize( true );
 
+        updateActions( true );
+        
         try
         {
             tray.add( trayIcon );
