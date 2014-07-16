@@ -9,7 +9,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Rectangle;
-import java.awt.TextField;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,7 +22,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import model.Commit;
+import data.Commit;
 
 /**
  *
@@ -32,30 +31,13 @@ import model.Commit;
 public class TrayDialog
     extends JDialog
 {
-    private static TrayDialog defaultInstance;
- 
     /**
      * TrayDialog
      * 
      */
-    private TrayDialog()
+    public TrayDialog()
     {
         initComponents();
-    }
-    
-    /**
-     * getInstance
-     * 
-     * @return TrayDialog
-     */
-    public static TrayDialog getInstance()
-    {
-        if ( defaultInstance == null )
-        {
-            defaultInstance = new TrayDialog();
-        }
-        
-        return defaultInstance;
     }
     
     /**
@@ -63,7 +45,7 @@ public class TrayDialog
      * 
      * @return Commit
      */
-    public Commit getCommit()
+    private Commit obtainInput()
     {
         Commit commit = new Commit();
         
@@ -72,6 +54,19 @@ public class TrayDialog
         commit.setVersion( versionField.getText() );
         
         return commit;
+    }
+    
+    /**
+     * clearInputs
+     * 
+     */
+    public void clearInputs()
+    {
+        ticketField.setText( "" );
+        revisionField.setText( "" );
+        versionField.setText( "" );
+        
+        ticketField.requestFocus();
     }
     
     /**
@@ -160,7 +155,7 @@ public class TrayDialog
             @Override
             public void actionPerformed( ActionEvent e )
             {
-                ApplicationController.getInstance().save();
+                ApplicationController.getInstance().saveCommit( obtainInput() );
             }
         } );
         

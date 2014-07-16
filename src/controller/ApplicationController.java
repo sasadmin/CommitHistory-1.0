@@ -1,7 +1,8 @@
 package controller;
 
 import java.awt.TrayIcon.MessageType;
-import model.Commit;
+import data.Commit;
+import model.ModelManager;
 import view.TrayDialog;
 import view.TrayIcon;
 
@@ -13,12 +14,15 @@ public class ApplicationController
 {
     private static ApplicationController defaultInstance;
 
+    private final TrayDialog trayDialog;
+    
     /**
      * ApplicationController
      * 
      */
     private ApplicationController()
     {
+        trayDialog = new TrayDialog();
     }
     
     /**
@@ -64,27 +68,25 @@ public class ApplicationController
     /**
      * save
      * 
+     * @param commit
      */
-    public void save()
+    public void saveCommit( Commit commit )
     {
-        Commit commit = TrayDialog.getInstance().getCommit();
-        
-        if ( validateCommit( commit ) )
+        if ( commit != null && validateCommit( commit ) )
         {
-            registerCommit( commit );
+            try
+            {
+                ModelManager.getInstance().getCommitModel().saveCommit( commit );
+                trayDialog.clearInputs();
+                
+                TrayIcon.getInstance().showMessage( "Commit salvo com sucesso", MessageType.INFO );
+            }
             
-            TrayIcon.getInstance().showMessage( "Commit salvo com sucesso", MessageType.INFO );
+            catch ( Exception e )
+            {
+                ApplicationController.getInstance().handleException( e );
+            }
         }
-    }
-    
-    /**
-     * registerCommit
-     * 
-     * @param commit 
-     */
-    private void registerCommit( Commit commit )
-    {
-        //TODO
     }
     
     /**
@@ -112,7 +114,7 @@ public class ApplicationController
      */
     public void toggleDialog( boolean visible )
     {
-        TrayDialog.getInstance().setVisible( visible );
+        trayDialog.setVisible( visible );
         TrayIcon.getInstance().updateActions( visible );
     }
     
@@ -122,7 +124,7 @@ public class ApplicationController
      */
     public void toggleDialog()
     {
-        toggleDialog( ! TrayDialog.getInstance().isVisible() );
+        toggleDialog( ! trayDialog.isVisible() );
     }
     
     /**
