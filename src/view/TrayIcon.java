@@ -81,6 +81,8 @@ public class TrayIcon
         trayIcon = new java.awt.TrayIcon( IconFactory.getImage( "/resources/tray.png" ) );
         final SystemTray tray = SystemTray.getSystemTray();
 
+        popup.add( aboutItem );
+        popup.addSeparator();
         popup.add( openItem );
         popup.add( minimizeItem );
         popup.add( exitItem );
@@ -141,6 +143,7 @@ public class TrayIcon
         } );
     }
 
+    private MenuItem aboutItem = new MenuItem( "Sobre" );
     private MenuItem openItem = new MenuItem( "Abrir" );
     private MenuItem minimizeItem = new MenuItem( "Minimizar" );
     private MenuItem exitItem = new MenuItem( "Fechar" );

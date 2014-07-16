@@ -3,7 +3,6 @@ package view;
 import controller.ApplicationController;
 import controller.IconFactory;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -18,18 +17,20 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import data.Commit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JWindow;
 
 /**
  *
  * @author Galimberti
  */
 public class TrayDialog
-    extends JDialog
+    extends JWindow
 {
     /**
      * TrayDialog
@@ -84,8 +85,6 @@ public class TrayDialog
      */
     private void initComponents()
     {
-        setModal( false );
-        setUndecorated( true );
         setSize( 250, 150 );
         
         Dimension scrnSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -164,6 +163,16 @@ public class TrayDialog
         buttonsPanel.add( saveButton, new GridBagConstraints( 1, 0, 1, 1, 1.0, 0.0, 
                                                               GridBagConstraints.EAST, GridBagConstraints.NONE, 
                                                               new Insets( 10 ,5, 10, 0 ), 0, 0 ) );
+        
+        menuButton.addMouseListener( new MouseAdapter() 
+        {
+            @Override
+            public void mousePressed( MouseEvent e )
+            {
+                PopupMenu menu = new PopupMenu();
+                menu.show( e.getComponent(), e.getX(), e.getY() - menu.getPreferredSize().height );
+            }
+        });
         
         saveButton.addActionListener( new ActionListener()
         {
