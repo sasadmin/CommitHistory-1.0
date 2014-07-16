@@ -70,6 +70,15 @@ public class TrayDialog
     }
     
     /**
+     * saveCommit
+     * 
+     */
+    private void saveCommit()
+    {
+        ApplicationController.getInstance().saveCommit( obtainInput() );
+    }
+    
+    /**
      * initComponents
      * 
      */
@@ -161,7 +170,7 @@ public class TrayDialog
             @Override
             public void actionPerformed( ActionEvent e )
             {
-                ApplicationController.getInstance().saveCommit( obtainInput() );
+                saveCommit();
             }
         } );
         
@@ -201,6 +210,18 @@ public class TrayDialog
                 if ( e.getKeyCode() == KeyEvent.VK_ENTER )
                 {
                     versionField.requestFocus();
+                }
+            }
+        } );
+        
+        versionField.addKeyListener( new KeyAdapter() 
+        {
+            @Override
+            public void keyReleased( KeyEvent e ) 
+            {
+                if ( e.getKeyCode() == KeyEvent.VK_ENTER )
+                {
+                    saveCommit();
                 }
             }
         } );

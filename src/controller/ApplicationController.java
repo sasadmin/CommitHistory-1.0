@@ -55,6 +55,7 @@ public class ApplicationController
     private boolean validateCommit( Commit commit )
     {
         StringBuilder validateInfo = new StringBuilder();
+        
         final String prefixInfo = "É necessário informar ";
         
         if ( commit.getTicket().trim().isEmpty() )
@@ -67,6 +68,18 @@ public class ApplicationController
             validateInfo.append( validateInfo.toString().isEmpty() ? prefixInfo : " e " );
             
             validateInfo.append( "a revisão" );
+        }
+        
+        if ( ! commit.getVersion().trim().isEmpty() )
+        {
+            String[] version = commit.getVersion().split( "\\." );
+            
+            if ( version.length != 4 )
+            {
+                String msg = "A versão informada não é valida!" ;
+                
+                validateInfo.append( validateInfo.toString().isEmpty() ? msg : "\n" + msg );
+            }
         }
         
         if ( ! validateInfo.toString().isEmpty() )
@@ -92,6 +105,11 @@ public class ApplicationController
                 trayDialog.clearInputs();
                 
                 Display.info( "Commit salvo com sucesso" );
+                
+                if ( ! commit.getVersion().trim().isEmpty() )
+                {
+                    signTicketHistory( commit );
+                }
             }
             
             catch ( Exception e )
@@ -99,6 +117,16 @@ public class ApplicationController
                 ApplicationController.getInstance().handleException( e );
             }
         }
+    }
+    
+    /**
+     * signTicketHistory
+     * 
+     * @param commit Commit
+     */
+    private void signTicketHistory( Commit commit )
+    {
+//        TicketHistoryController.assign( commit );
     }
     
     /**
