@@ -41,14 +41,14 @@ public class TrayIcon
     }
 
     /**
-     * showMessage
-     *
+     * showMessage<br>
+     * utilizar util.Display para exibição de mensagens
      * @param message String
      * @param type
      */
     public void showMessage( String message, MessageType type )
     {
-        trayIcon.displayMessage( "Commit History",
+        trayIcon.displayMessage( ApplicationController.applicationName,
                                  message,
                                  type );
     }
@@ -89,8 +89,6 @@ public class TrayIcon
         trayIcon.setToolTip( "Commit History" );
         trayIcon.setImageAutoSize( true );
 
-        updateActions( true );
-        
         try
         {
             tray.add( trayIcon );

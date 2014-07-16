@@ -87,16 +87,16 @@ public class TrayDialog
         setLocation( scrnSize.width - getWidth(), 
                      scrnSize.height - getHeight() - taskBarHeight );
         
-        Font defaultFont = new Font( "monospaced", Font.BOLD, 12 );
-        
         ticketLabel.setText( "Ticket:" );
-        ticketLabel.setFont( defaultFont );
+        ticketLabel.setFont( ApplicationController.defaultFont );
         revisionLabel.setText( "Revisão:" );
-        revisionLabel.setFont( defaultFont );
+        revisionLabel.setFont( ApplicationController.defaultFont );
         versionLabel.setText( "Versão:" );
-        versionLabel.setFont( defaultFont );
+        versionLabel.setFont( ApplicationController.defaultFont );
+        applicationNameLabel.setText( ApplicationController.applicationName );
+        applicationNameLabel.setFont( ApplicationController.defaultTitleFont );
         
-        DialogPane pane = new DialogPane();
+        saveButton.setFont( ApplicationController.defaultFont );
         
         setLayout( new GridBagLayout() );
         
@@ -105,50 +105,56 @@ public class TrayDialog
                                            new Insets( 0,0,0,0 ), 0, 0 ) );
         
         pane.setLayout( new GridBagLayout() );
+
+        final Insets insets = new Insets( 5, 10, 0, 10 );
         
-        pane.add( minimizeButton, new GridBagConstraints( 3, 0, 1, 1, 0.0, 0.0, 
-                                                          GridBagConstraints.NORTHEAST, GridBagConstraints.NONE, 
-                                                          new Insets( 10,10,10,10 ), 0, 0 ) );
+        pane.add( applicationNameLabel, new GridBagConstraints( 0, 0, 2, 1, 1.0, 0.0, 
+                                                          GridBagConstraints.WEST, GridBagConstraints.NONE, 
+                                                          insets, 0, 0 ) );
+        
+        pane.add( minimizeButton, new GridBagConstraints( 2, 0, 1, 1, 0.0, 0.0, 
+                                                          GridBagConstraints.CENTER, GridBagConstraints.NONE, 
+                                                          insets, 0, 0 ) );
         
         pane.add( ticketLabel, new GridBagConstraints( 0, 1, 1, 1, 0.0, 0.0, 
                                                        GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, 
-                                                       new Insets( 0,5,5,0 ), 0, 0 ) );
+                                                       insets, 0, 0 ) );
         
         pane.add( ticketField, new GridBagConstraints( 1, 1, 2, 1, 1.0, 0.0, 
                                                        GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, 
-                                                       new Insets( 0,5,5,25 ), 0, 0 ) );
+                                                       insets, 0, 0 ) );
         
         pane.add( revisionLabel, new GridBagConstraints( 0, 2, 1, 1, 0.0, 0.0, 
                                                          GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, 
-                                                         new Insets( 0,5,5,0 ), 0, 0 ) );
+                                                         insets, 0, 0 ) );
         
         pane.add( revisionField, new GridBagConstraints( 1, 2, 2, 1, 1.0, 0.0, 
                                                          GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, 
-                                                         new Insets( 0,5,5,25 ), 0, 0 ) );
+                                                         insets, 0, 0 ) );
         
         pane.add( versionLabel, new GridBagConstraints( 0, 3, 1, 1, 0.0, 0.0, 
                                                         GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, 
-                                                        new Insets( 0,5,5,0 ), 0, 0 ) );
+                                                        insets, 0, 0 ) );
         
         pane.add( versionField, new GridBagConstraints( 1, 3, 2, 1, 1.0, 0.0, 
                                                         GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, 
-                                                        new Insets( 0,5,5,25 ), 0, 0 ) );
+                                                        insets, 0, 0 ) );
         
         pane.add( buttonsPanel, new GridBagConstraints( 0, 4, 4, 1, 1.0, 1.0, 
                                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH, 
-                                                        new Insets( 0,0,0,0 ), 0, 0 ) );
+                                                        insets, 0, 0 ) );
         
         buttonsPanel.setOpaque( false );
         
         buttonsPanel.setLayout( new GridBagLayout() );
         
-        buttonsPanel.add( saveButton, new GridBagConstraints( 0, 0, 1, 1, 1.0, 0.0, 
-                                                              GridBagConstraints.SOUTHWEST, GridBagConstraints.NONE, 
-                                                              new Insets( 10,5,10,10 ), 0, 0 ) );
+        buttonsPanel.add( menuButton, new GridBagConstraints( 0, 0, 1, 1, 1.0, 0.0, 
+                                                              GridBagConstraints.WEST, GridBagConstraints.NONE, 
+                                                              new Insets( 10, 0, 10, 5 ), 0, 0 ) );
         
-        buttonsPanel.add( menuButton, new GridBagConstraints( 1, 0, 1, 1, 1.0, 0.0, 
-                                                              GridBagConstraints.SOUTHEAST, GridBagConstraints.NONE, 
-                                                              new Insets( 10,10,10,5 ), 0, 0 ) );
+        buttonsPanel.add( saveButton, new GridBagConstraints( 1, 0, 1, 1, 1.0, 0.0, 
+                                                              GridBagConstraints.EAST, GridBagConstraints.NONE, 
+                                                              new Insets( 10 ,5, 10, 0 ), 0, 0 ) );
         
         saveButton.addActionListener( new ActionListener()
         {
@@ -199,7 +205,8 @@ public class TrayDialog
             }
         } );
     }
-    
+   
+    private final DialogPane pane = new DialogPane();
     private JPanel buttonsPanel = new JPanel();
     
     private JButton saveButton = new JButton( "Salvar" );
@@ -208,6 +215,7 @@ public class TrayDialog
     private JLabel ticketLabel = new JLabel();
     private JLabel revisionLabel = new JLabel();
     private JLabel versionLabel = new JLabel();
+    private JLabel applicationNameLabel = new JLabel();
     
     private JTextField ticketField = new JTextField();
     private JTextField revisionField = new JTextField();

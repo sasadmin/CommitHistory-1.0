@@ -11,6 +11,29 @@ public class Commit
     private String version;
 
     /**
+     * Commit
+     * 
+     */
+    public Commit() 
+    {
+    }
+
+    /**
+     * Commit
+     * 
+     * @param ticket
+     * @param revision
+     * @param version 
+     */
+    public Commit( String ticket, String revision, String version ) 
+    {
+        this.ticket = ticket;
+        this.revision = revision;
+        this.version = version;
+    }
+
+    
+    /**
      * getTicket
      * 
      * @return 

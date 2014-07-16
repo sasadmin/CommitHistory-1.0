@@ -1,8 +1,9 @@
 package controller;
 
-import java.awt.TrayIcon.MessageType;
 import data.Commit;
+import java.awt.Font;
 import model.ModelManager;
+import util.Display;
 import view.TrayDialog;
 import view.TrayIcon;
 
@@ -14,6 +15,11 @@ public class ApplicationController
 {
     private static ApplicationController defaultInstance;
 
+    public static final String applicationName = "Commit History";
+    
+    public static final Font defaultFont = new Font( "monospaced", Font.BOLD, 12 );
+    public static final Font defaultTitleFont = new Font( "monospaced", Font.BOLD, 15 );
+    
     private final TrayDialog trayDialog;
     
     /**
@@ -48,21 +54,27 @@ public class ApplicationController
      */
     private boolean validateCommit( Commit commit )
     {
+        StringBuilder validateInfo = new StringBuilder();
+        final String prefixInfo = "É necessário informar ";
+        
         if ( commit.getTicket().trim().isEmpty() )
         {
-            TrayIcon.getInstance().showMessage( "É necessário informar o ticket!", MessageType.ERROR );
-            
-            return false;
+            validateInfo.append( prefixInfo ).append( "o ticket" );
         }
         
-        else if ( commit.getRevision().trim().isEmpty() )
+        if ( commit.getRevision().trim().isEmpty() )
         {
-            TrayIcon.getInstance().showMessage( "É necessário informar a revisão!", MessageType.ERROR );
+            validateInfo.append( validateInfo.toString().isEmpty() ? prefixInfo : " e " );
             
-            return false;
+            validateInfo.append( "a revisão" );
         }
         
-        return true;
+        if ( ! validateInfo.toString().isEmpty() )
+        {
+            Display.alert( validateInfo + "!" );
+        }
+        
+        return validateInfo.toString().isEmpty();
     }
     
     /**
@@ -79,7 +91,7 @@ public class ApplicationController
                 ModelManager.getInstance().getCommitModel().saveCommit( commit );
                 trayDialog.clearInputs();
                 
-                TrayIcon.getInstance().showMessage( "Commit salvo com sucesso", MessageType.INFO );
+                Display.info( "Commit salvo com sucesso" );
             }
             
             catch ( Exception e )
@@ -134,7 +146,8 @@ public class ApplicationController
      */
     public void handleException( Exception e )
     {
-        e.printStackTrace();
+        Display.exception( e.getMessage() );
+//        e.printStackTrace();
     }
     
     /**
