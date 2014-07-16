@@ -23,14 +23,14 @@ import javax.swing.JTextField;
 import data.Commit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JWindow;
+import javax.swing.JDialog;
 
 /**
  *
  * @author Galimberti
  */
 public class TrayDialog
-    extends JWindow
+    extends JDialog
 {
     /**
      * TrayDialog
@@ -86,6 +86,9 @@ public class TrayDialog
     private void initComponents()
     {
         setSize( 250, 150 );
+        
+        setUndecorated( true );
+        setModal( true );
         
         Dimension scrnSize = Toolkit.getDefaultToolkit().getScreenSize();
         Rectangle winSize = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
