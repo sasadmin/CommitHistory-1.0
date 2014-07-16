@@ -9,9 +9,15 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Rectangle;
+import java.awt.TextField;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -27,7 +33,11 @@ public class TrayDialog
     extends JDialog
 {
     private static TrayDialog defaultInstance;
-    
+ 
+    /**
+     * TrayDialog
+     * 
+     */
     private TrayDialog()
     {
         initComponents();
@@ -151,6 +161,46 @@ public class TrayDialog
             public void actionPerformed( ActionEvent e )
             {
                 ApplicationController.getInstance().save();
+            }
+        } );
+        
+        FocusListener focusEvent = new FocusAdapter() 
+        {
+            @Override
+            public void focusGained(FocusEvent e) 
+            {
+                ( (JTextField) e.getComponent() ).selectAll();
+            }
+        };
+        
+        saveButton.setFocusable( false );
+        menuButton.setFocusable( false );
+        
+        ticketField.addFocusListener( focusEvent );
+        revisionField.addFocusListener( focusEvent );
+        versionField.addFocusListener( focusEvent );
+        
+        ticketField.addKeyListener( new KeyAdapter() 
+        {
+            @Override
+            public void keyReleased( KeyEvent e ) 
+            {
+                if ( e.getKeyCode() == KeyEvent.VK_ENTER )
+                {
+                    revisionField.requestFocus();
+                }
+            }
+        } );
+        
+        revisionField.addKeyListener( new KeyAdapter() 
+        {
+            @Override
+            public void keyReleased( KeyEvent e ) 
+            {
+                if ( e.getKeyCode() == KeyEvent.VK_ENTER )
+                {
+                    versionField.requestFocus();
+                }
             }
         } );
     }

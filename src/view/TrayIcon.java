@@ -16,6 +16,10 @@ public class TrayIcon
 {
     private static TrayIcon defaultInstance;
 
+    /**
+     * TryIcon
+     * 
+     */
     private TrayIcon()
     {
         initComponents();

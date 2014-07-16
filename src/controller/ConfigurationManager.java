@@ -15,7 +15,7 @@ public class ConfigurationManager
     
     private Properties defaultProperties = new Properties();
     
-    private String path = System.getProperty( "user.home" ) + File.separator + "CommitHistory.properties";
+    private final String path = System.getProperty( "user.home" ) + File.separator + "CommitHistory.properties";
 
     /**
      * @return ConfigurationManager

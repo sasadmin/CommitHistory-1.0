@@ -11,7 +11,9 @@ public class Commit
     private String version;
 
     /**
-     * @return the ticket
+     * getTicket
+     * 
+     * @return 
      */
     public String getTicket()
     {

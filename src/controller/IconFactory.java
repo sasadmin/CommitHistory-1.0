@@ -10,7 +10,13 @@ import javax.swing.ImageIcon;
  */
 public class IconFactory
 {
-    private IconFactory() {}
+    /**
+     * IconFactory
+     * 
+     */
+    private IconFactory() 
+    {
+    }
     
     /**
      * getIcon
@@ -45,7 +51,7 @@ public class IconFactory
         
         URL imageURL = IconFactory.class.getResource( path );
         
-        if (imageURL == null) 
+        if ( imageURL == null ) 
         {
             System.err.println( "Resource not found: " + path );
         } 

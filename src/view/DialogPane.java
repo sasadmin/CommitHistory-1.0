@@ -16,9 +16,13 @@ import javax.swing.border.LineBorder;
 public class DialogPane
     extends JPanel
 {
+    /**
+     * DialogPane
+     * 
+     */
     public DialogPane()
     {
-        setBorder( new LineBorder( new Color( 0, 0, 0 ), 1, true ) );
+        initComponents();
     }
     
     /**
@@ -44,5 +48,14 @@ public class DialogPane
         g2d.fillOval( (getWidth() / 2) * -1, 0, (int)(getWidth() * 1.2), getHeight() );
 
         g2d.setTransform( defaultTransform );
+    }
+    
+    /**
+     * initComponents
+     * 
+     */
+    private void initComponents()
+    {
+        setBorder( new LineBorder( new Color( 0, 0, 0 ), 1, true ) );
     }
 }

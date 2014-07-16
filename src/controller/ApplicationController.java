@@ -12,7 +12,11 @@ import view.TrayIcon;
 public class ApplicationController
 {
     private static ApplicationController defaultInstance;
-    
+
+    /**
+     * ApplicationController
+     * 
+     */
     private ApplicationController()
     {
     }
@@ -73,9 +77,14 @@ public class ApplicationController
         }
     }
     
+    /**
+     * registerCommit
+     * 
+     * @param commit 
+     */
     private void registerCommit( Commit commit )
     {
-        
+        //TODO
     }
     
     /**
@@ -84,8 +93,7 @@ public class ApplicationController
      */
     public void showDialog()
     {
-        TrayDialog.getInstance().setVisible( true );
-        TrayIcon.getInstance().updateActions( true );
+        toggleDialog( true );
     }
     
     /**
@@ -94,8 +102,18 @@ public class ApplicationController
      */
     public void closeDialog()
     {
-        TrayDialog.getInstance().setVisible( false );
-        TrayIcon.getInstance().updateActions( false );
+        toggleDialog( false );
+    }
+    
+    /**
+     * toggleDialog
+     * 
+     * @param visible 
+     */
+    public void toggleDialog( boolean visible )
+    {
+        TrayDialog.getInstance().setVisible( visible );
+        TrayIcon.getInstance().updateActions( visible );
     }
     
     /**
@@ -104,10 +122,7 @@ public class ApplicationController
      */
     public void toggleDialog()
     {
-        boolean visible = TrayDialog.getInstance().isVisible();
-        
-        TrayDialog.getInstance().setVisible( !visible );
-        TrayIcon.getInstance().updateActions( !visible );
+        toggleDialog( ! TrayDialog.getInstance().isVisible() );
     }
     
     /**
@@ -130,6 +145,7 @@ public class ApplicationController
         {
             ConfigurationManager.getInstance().save();
         }
+        
         catch ( Exception e )
         {
             handleException( e );            
