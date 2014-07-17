@@ -9,7 +9,7 @@ import view.TrayIcon;
 
 /**
  *
- * @author Galimberti
+ * @author LHG
  */
 public class ApplicationController
 {
@@ -82,6 +82,18 @@ public class ApplicationController
             }
         }
         
+        if ( validateInfo.toString().isEmpty() )
+        {
+            String value = ConfigurationManager.getInstance().getProperty( commit.getRevision() );
+            
+            if( !value.isEmpty() && Boolean.valueOf( value ) )
+            {
+                String msg = "Esta revisão já está associada a este ticket!" ;
+                
+                validateInfo.append( validateInfo.toString().isEmpty() ? msg : "\n" + msg );
+            }
+        }
+        
         if ( ! validateInfo.toString().isEmpty() )
         {
             Display.alert( validateInfo + "!" );
@@ -101,10 +113,14 @@ public class ApplicationController
         {
             try
             {
-                ModelManager.getInstance().getCommitModel().saveCommit( commit );
-                trayDialog.clearInputs();
-                
-                Display.info( "Commit salvo com sucesso" );
+                String value = ConfigurationManager.getInstance().getProperty( commit.getRevision()+ "-" + commit.getTicket() );
+            
+                if( value.isEmpty() )
+                {
+                    ModelManager.getInstance().getCommitModel().saveCommit( commit );
+                    trayDialog.clearInputs();
+                    Display.info( "Commit salvo com sucesso" );
+                }
                 
                 if ( ! commit.getVersion().trim().isEmpty() )
                 {

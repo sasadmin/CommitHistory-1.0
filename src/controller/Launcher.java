@@ -2,12 +2,11 @@ package controller;
 
 import java.net.ServerSocket;
 import javax.swing.UIManager;
-import view.TrayDialog;
 import view.TrayIcon;
 
 /**
  *
- * @author Galimberti
+ * @author LHG
  */
 public class Launcher
 {
@@ -35,12 +34,10 @@ public class Launcher
             UIManager.setLookAndFeel( "com.sun.java.swing.plaf.windows.WindowsLookAndFeel" );
             
             UIManager.put( "swing.boldMetal", Boolean.FALSE );
-        
-            ApplicationController.getInstance().showDialog();
 
             TrayIcon.getInstance();
-
-            ConfigurationManager.getInstance();
+            
+            ApplicationController.getInstance().showDialog();
         }
         
         catch ( Exception e )

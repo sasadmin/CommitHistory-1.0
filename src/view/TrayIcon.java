@@ -12,6 +12,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ *
+ * @author LHG
+ */
 public class TrayIcon
 {
     private static TrayIcon defaultInstance;

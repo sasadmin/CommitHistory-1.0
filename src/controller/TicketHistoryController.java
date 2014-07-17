@@ -7,7 +7,7 @@ import util.Display;
 
 /**
  *
- * @author Alex Carvalho
+ * @author AC
  */
 public class TicketHistoryController
 {

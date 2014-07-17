@@ -7,7 +7,7 @@ import java.util.Properties;
 
 /**
  *
- * @author Alex Carvalho
+ * @author AC
  */
 public class ConfigurationManager
 {
