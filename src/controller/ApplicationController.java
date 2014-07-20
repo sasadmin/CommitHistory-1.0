@@ -3,7 +3,7 @@ package controller;
 import data.Commit;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.MouseAdapter;
+import javax.swing.SwingUtilities;
 import model.ModelManager;
 import util.Display;
 import view.DefaultWindow;
@@ -178,6 +178,16 @@ public class ApplicationController
     {
         TrayIcon.getInstance().updateActions( visible );
         trayDialog.setVisible( visible );
+        
+        SwingUtilities.invokeLater( new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                trayDialog.requestFocusInWindow();
+                trayDialog.setAlwaysOnTop( true );
+            }
+        } );
     }
     
     /**
@@ -207,9 +217,29 @@ public class ApplicationController
      * closeWindow
      * 
      */
+    public void closeWindow( boolean animation )
+    {
+        if ( trayDialog.getGlassPane() instanceof GlassPane )
+        {
+            if ( animation )
+            {
+                ((GlassPane)trayDialog.getGlassPane()).fadeOut();
+            }
+            
+            else
+            {
+                ((GlassPane)trayDialog.getGlassPane()).setVisible( false );
+            }
+        }
+    }
+    
+    /**
+     * closeWindow
+     * 
+     */
     public void closeWindow()
     {
-        ((GlassPane)trayDialog.getGlassPane()).fadeOut();
+        closeWindow( true );
     }
     
     /**

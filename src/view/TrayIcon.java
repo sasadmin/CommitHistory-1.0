@@ -118,6 +118,17 @@ public class TrayIcon
             }
         });
 
+        aboutItem.addActionListener( new ActionListener()
+        {
+            @Override
+            public void actionPerformed( ActionEvent e )
+            {
+                ApplicationController.getInstance().toggleDialog( true );
+                ApplicationController.getInstance().closeWindow( false );
+                ApplicationController.getInstance().openWindow( new AboutWindow() );
+            }
+        } );
+
         openItem.addActionListener( new ActionListener()
         {
             @Override

@@ -73,7 +73,7 @@ public class TrayDialog
      */
     public void clearInputs()
     {
-        ticketField.setText( "" );
+//        ticketField.setText( "" );
         revisionField.setText( "" );
         versionField.setText( "" );
         
@@ -97,8 +97,6 @@ public class TrayDialog
     {
         setSize( ApplicationController.defaultDimension );
         setPreferredSize( ApplicationController.defaultDimension );
-        
-        setAlwaysOnTop( true );
         
         Dimension scrnSize = Toolkit.getDefaultToolkit().getScreenSize();
         Rectangle winSize = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
@@ -260,9 +258,9 @@ public class TrayDialog
     private JLabel versionLabel = new JLabel();
     private JLabel applicationNameLabel = new JLabel();
     
-    private JTextField ticketField = new JTextField();
+    private TicketField ticketField = new TicketField();
     private JTextField revisionField = new JTextField();
-    private JTextField versionField = new JTextField();
+    private VersionField versionField = new VersionField();
     
     private MinimizeButton minimizeButton = new MinimizeButton();
 }

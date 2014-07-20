@@ -13,10 +13,10 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
-import org.jdesktop.swingx.JXButton;
 
 /**
  *
@@ -53,6 +53,15 @@ public class TicketQueryWindow
         closeButton.setText( "Fechar" );
         closeButton.setForeground( Color.BLACK );
         closeButton.setFont( ApplicationController.defaultFont );
+        
+        ticketField.addFocusListener( new FocusAdapter() 
+        {
+            @Override
+            public void focusGained(FocusEvent e) 
+            {
+                ( (TicketField) e.getComponent() ).selectAll();
+            }
+        } );
 
         setLayout( new GridBagLayout() );
 
@@ -92,7 +101,7 @@ public class TicketQueryWindow
     }
 
     private JLabel ticketLabel = new JLabel();
-    private JTextField ticketField = new JTextField();
+    private TicketField ticketField = new TicketField();
 
     private JButton okButton = new JButton();
     private JButton closeButton = new JButton();

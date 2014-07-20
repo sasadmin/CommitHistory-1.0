@@ -4,14 +4,18 @@
  * and open the template in the editor.
  */
 
-package data;
+package view;
 
 /**
  *
  * @author Galimberti
  */
-public class Configuration
+public class VersionField
+    extends AutoCompleteTextField
 {
-    private String storagePath;
-    
+    public VersionField()
+    {
+        addPossibility( "SA-WEB-7.0.0.0" );
+        addPossibility( "SA-DESKTOP-7.0.0.0" );
+    }
 }
