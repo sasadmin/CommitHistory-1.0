@@ -98,7 +98,7 @@ public class TrayDialog
         setSize( ApplicationController.defaultDimension );
         setPreferredSize( ApplicationController.defaultDimension );
         
-//        setAlwaysOnTop( true );
+        setAlwaysOnTop( true );
         
         Dimension scrnSize = Toolkit.getDefaultToolkit().getScreenSize();
         Rectangle winSize = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
