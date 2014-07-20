@@ -2,6 +2,7 @@ package view;
 
 import controller.ApplicationController;
 import controller.IconFactory;
+import data.Commit;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
@@ -16,21 +17,21 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import data.Commit;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JDialog;
+import javax.swing.JWindow;
 
 /**
  *
  * @author Galimberti
  */
 public class TrayDialog
-    extends JDialog
+    extends JWindow
 {
     /**
      * TrayDialog
@@ -38,6 +39,15 @@ public class TrayDialog
      */
     public TrayDialog()
     {
+        super( new JFrame()
+        {
+            @Override
+            public boolean isShowing()
+            {
+                return true;
+            }
+        });
+        
         initComponents();
     }
     
@@ -85,10 +95,10 @@ public class TrayDialog
      */
     private void initComponents()
     {
-        setSize( 250, 150 );
+        setSize( ApplicationController.defaultDimension );
+        setPreferredSize( ApplicationController.defaultDimension );
         
-        setUndecorated( true );
-        setModal( true );
+//        setAlwaysOnTop( true );
         
         Dimension scrnSize = Toolkit.getDefaultToolkit().getScreenSize();
         Rectangle winSize = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
@@ -109,9 +119,9 @@ public class TrayDialog
         
         saveButton.setFont( ApplicationController.defaultFont );
         
-        setLayout( new GridBagLayout() );
+        getContentPane().setLayout( new GridBagLayout() );
         
-        add( pane, new GridBagConstraints( 0, 0, 1, 1, 1.0, 1.0, 
+        getContentPane().add( pane, new GridBagConstraints( 0, 0, 1, 1, 1.0, 1.0, 
                                            GridBagConstraints.CENTER, GridBagConstraints.BOTH, 
                                            new Insets( 0,0,0,0 ), 0, 0 ) );
         

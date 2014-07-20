@@ -1,9 +1,13 @@
 package controller;
 
 import data.Commit;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
 import model.ModelManager;
 import util.Display;
+import view.DefaultWindow;
+import view.GlassPane;
 import view.TrayDialog;
 import view.TrayIcon;
 
@@ -19,6 +23,8 @@ public class ApplicationController
     
     public static final Font defaultFont = new Font( "monospaced", Font.BOLD, 12 );
     public static final Font defaultTitleFont = new Font( "monospaced", Font.BOLD, 15 );
+    
+    public static final Dimension defaultDimension = new Dimension( 250, 150 );
     
     private final TrayDialog trayDialog;
     
@@ -170,8 +176,8 @@ public class ApplicationController
      */
     public void toggleDialog( boolean visible )
     {
-        trayDialog.setVisible( visible );
         TrayIcon.getInstance().updateActions( visible );
+        trayDialog.setVisible( visible );
     }
     
     /**
@@ -181,6 +187,29 @@ public class ApplicationController
     public void toggleDialog()
     {
         toggleDialog( ! trayDialog.isVisible() );
+    }
+    
+    /**
+     * openWindow
+     * 
+     * @param window 
+     */
+    public void openWindow( DefaultWindow window )
+    {
+        GlassPane glassPane = new GlassPane( window );
+        
+        trayDialog.setGlassPane( glassPane );
+        
+        glassPane.fadeIn();
+    }
+    
+    /**
+     * closeWindow
+     * 
+     */
+    public void closeWindow()
+    {
+        ((GlassPane)trayDialog.getGlassPane()).fadeOut();
     }
     
     /**

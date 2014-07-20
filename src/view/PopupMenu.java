@@ -4,7 +4,10 @@
  */
 package view;
 
+import controller.ApplicationController;
 import controller.IconFactory;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
@@ -30,6 +33,15 @@ public class PopupMenu
         
         add( ticketQueryItem );
         add( configItem );
+        
+        ticketQueryItem.addActionListener( new ActionListener()
+        {
+            @Override
+            public void actionPerformed( ActionEvent e )
+            {
+                ApplicationController.getInstance().openWindow( new TicketQueryWindow() );
+            }
+        } );
     }
     
     private JMenuItem ticketQueryItem = new JMenuItem();
