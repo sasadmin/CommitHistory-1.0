@@ -13,6 +13,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import org.jdesktop.swingx.JXButton;
@@ -42,17 +43,15 @@ public class TicketQueryWindow
         setPreferredSize( new Dimension( 200, 100 ) );
 
         ticketLabel.setText( "Ticket:" );
-        ticketLabel.setForeground( Color.WHITE );
+        ticketLabel.setForeground( Color.BLACK );
         ticketLabel.setFont( ApplicationController.defaultFont );
 
         okButton.setText( "Buscar" );
-        okButton.setForeground( Color.WHITE );
-        okButton.setBackground( Color.BLACK );
+        okButton.setForeground( Color.BLACK );
         okButton.setFont( ApplicationController.defaultFont );
 
         closeButton.setText( "Fechar" );
-        closeButton.setForeground( Color.WHITE );
-        closeButton.setBackground( Color.BLACK );
+        closeButton.setForeground( Color.BLACK );
         closeButton.setFont( ApplicationController.defaultFont );
 
         setLayout( new GridBagLayout() );
@@ -95,6 +94,6 @@ public class TicketQueryWindow
     private JLabel ticketLabel = new JLabel();
     private JTextField ticketField = new JTextField();
 
-    private JXButton okButton = new JXButton();
-    private JXButton closeButton = new JXButton();
+    private JButton okButton = new JButton();
+    private JButton closeButton = new JButton();
 }
