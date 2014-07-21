@@ -15,6 +15,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
@@ -46,13 +48,15 @@ public class TicketQueryWindow
         ticketLabel.setForeground( Color.BLACK );
         ticketLabel.setFont( ApplicationController.defaultFont );
 
-        okButton.setText( "Buscar" );
-        okButton.setForeground( Color.BLACK );
-        okButton.setFont( ApplicationController.defaultFont );
+        openButton.setText( "Abrir" );
+        openButton.setToolTipText( "Abrir o arquivo de log" );
+        openButton.setForeground( Color.BLACK );
+        openButton.setFont( ApplicationController.defaultFont );
 
-        closeButton.setText( "Fechar" );
-        closeButton.setForeground( Color.BLACK );
-        closeButton.setFont( ApplicationController.defaultFont );
+        copyButton.setText( "Copiar" );
+        copyButton.setToolTipText( "Copiar para área de transferência" );
+        copyButton.setForeground( Color.BLACK );
+        copyButton.setFont( ApplicationController.defaultFont );
         
         ticketField.addFocusListener( new FocusAdapter() 
         {
@@ -65,23 +69,27 @@ public class TicketQueryWindow
 
         setLayout( new GridBagLayout() );
 
-        add( ticketLabel, new GridBagConstraints( 0, 0, 1, 1, 0.0, 0.0,
+        add( closeButton, new GridBagConstraints( 0, 0, 3, 1, 0.0, 0.0, 
+                                                     GridBagConstraints.EAST, GridBagConstraints.NONE, 
+                                                     new Insets( 0, 0, 15, 15 ), 0, 0 ) );
+        
+        add( ticketLabel, new GridBagConstraints( 1, 0, 1, 1, 0.0, 0.0,
                                                   GridBagConstraints.WEST, GridBagConstraints.NONE,
-                                                  new Insets( 25, 15, 0, 0 ), 0, 0 ) );
+                                                  new Insets( 30, 15, 0, 0 ), 0, 0 ) );
 
-        add( ticketField, new GridBagConstraints( 1, 0, 1, 1, 1.0, 0.0,
+        add( ticketField, new GridBagConstraints( 2, 0, 1, 1, 1.0, 0.0,
                                                   GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL,
-                                                  new Insets( 25, 0, 0, 15 ), 0, 0 ) );
+                                                  new Insets( 30, 0, 0, 15 ), 0, 0 ) );
 
-        add( okButton, new GridBagConstraints( 0, 1, 1, 1, 0.0, 1.0,
+        add( openButton, new GridBagConstraints( 1, 1, 1, 1, 0.0, 1.0,
                                                GridBagConstraints.SOUTHWEST, GridBagConstraints.NONE,
                                                new Insets( 0, 10, 10, 0 ), 0, 0 ) );
 
-        add( closeButton, new GridBagConstraints( 1, 1, 1, 1, 1.0, 1.0,
+        add( copyButton, new GridBagConstraints( 2, 1, 1, 1, 1.0, 1.0,
                                                   GridBagConstraints.SOUTHEAST, GridBagConstraints.NONE,
                                                   new Insets( 0, 0, 10, 10 ), 0, 0 ) );
 
-        okButton.addActionListener( new ActionListener()
+        openButton.addActionListener( new ActionListener()
         {
             @Override
             public void actionPerformed( ActionEvent e )
@@ -90,19 +98,30 @@ public class TicketQueryWindow
             }
         } );
 
-        closeButton.addActionListener( new ActionListener()
+        copyButton.addActionListener( new ActionListener()
         {
             @Override
             public void actionPerformed( ActionEvent e )
             {
-                ApplicationController.getInstance().closeWindow();
+                //TODO
             }
+        } );
+        
+        closeButton.addMouseListener( new MouseAdapter()  
+        {  
+            @Override
+            public void mouseClicked(MouseEvent e)  
+            {  
+                ApplicationController.getInstance().closeWindow();
+            }  
         } );
     }
 
     private JLabel ticketLabel = new JLabel();
     private TicketField ticketField = new TicketField();
 
-    private JButton okButton = new JButton();
-    private JButton closeButton = new JButton();
+    private JButton openButton = new JButton();
+    private JButton copyButton = new JButton();
+    
+    private CloseButton closeButton = new CloseButton();
 }
