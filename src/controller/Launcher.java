@@ -31,9 +31,12 @@ public class Launcher
         
         try 
         {
-            UIManager.setLookAndFeel( "com.sun.java.swing.plaf.windows.WindowsLookAndFeel" );
-            
-            UIManager.put( "swing.boldMetal", Boolean.FALSE );
+            if ( System.getProperty( "os.name" ).startsWith( "Windows" ) )
+            {
+                UIManager.setLookAndFeel( "com.sun.java.swing.plaf.windows.WindowsLookAndFeel" );
+
+                UIManager.put( "swing.boldMetal", Boolean.FALSE );
+            }
 
             TrayIcon.getInstance();
             

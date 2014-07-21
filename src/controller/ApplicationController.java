@@ -219,7 +219,7 @@ public class ApplicationController
      */
     private void signTicketHistory( Commit commit )
     {
-//        TicketHistoryController.assign( commit );
+        TicketHistoryController.assign( commit );
     }
     
     /**
