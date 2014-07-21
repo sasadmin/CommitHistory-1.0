@@ -38,6 +38,15 @@ public class PopupMenu
                 ApplicationController.getInstance().openWindow( new TicketQueryWindow() );
             }
         } );
+        
+        configItem.addActionListener( new ActionListener()
+        {
+            @Override
+            public void actionPerformed( ActionEvent e )
+            {
+                ApplicationController.getInstance().openWindow( new ConfigurationWindow() );
+            }
+        } );
     }
     
     private JMenuItem ticketQueryItem = new JMenuItem();
