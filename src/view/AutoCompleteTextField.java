@@ -91,6 +91,7 @@ public class AutoCompleteTextField extends JFormattedTextField implements KeyLis
             public void focusGained( FocusEvent e )
             {
                 areGuessing = true;
+                findCurrentGuess();
                 repaint();
             }
 
@@ -233,31 +234,49 @@ public class AutoCompleteTextField extends JFormattedTextField implements KeyLis
 
     private void findPreviousGuess()
     {
-//        String entered = this.getText().trim();
-//        
-//        if ( !this.caseSensitive )
-//        {
-//            entered = entered.toLowerCase();
-//        }
-//        
-//        int previousGuess = currentGuess;
-//
-//        for ( int i = 0; i < this.possibilities.size(); i++ )
-//        {
-//            String possibility = this.possibilities.get( i );
-//            
-//            if ( !this.caseSensitive )
-//            {
-//                possibility = possibility.toLowerCase();
-//            }
-//            
-//            if ( possibility.startsWith( entered ) )
-//            {
-//                
-//                this.currentGuess = i;
-//                return;
-//            }
-//        }
+        String entered = this.getText().trim();
+        
+        if ( !this.caseSensitive )
+        {
+            entered = entered.toLowerCase();
+        }
+        
+        int previousGuess = -1;
+        
+        if ( currentGuess == 0 )
+        {
+            currentGuess = -1;
+            
+            return;
+        }
+        
+        for ( int i = 0; i < this.possibilities.size(); i++ )
+        {
+            if ( currentGuess == -1 || i < currentGuess || previousGuess == -1 || previousGuess > currentGuess )
+            {
+                String possibility = this.possibilities.get( i );
+
+                if ( !this.caseSensitive )
+                {
+                    possibility = possibility.toLowerCase();
+                }
+
+                if ( possibility.startsWith( entered ) )
+                {
+                    if ( currentGuess == -1 || i < currentGuess )
+                    {
+                        previousGuess = i;
+                    }
+
+                    else if ( previousGuess > -1 && i >= currentGuess )
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+        
+        currentGuess = previousGuess;
     }
 
     @Override
