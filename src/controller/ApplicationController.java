@@ -33,8 +33,6 @@ public class ApplicationController
     
     public static final Dimension defaultDimension = new Dimension( 250, 150 );
     
-    public static final String PATH_SAVE_LOG = System.getProperty( "user.home" ) + File.separator + "CommitHistory";
-    
     private final TrayDialog trayDialog;
     
     /**
@@ -81,7 +79,7 @@ public class ApplicationController
      */
     public File getFile( String ticket, boolean createNotExists )
     {
-        File file = new File( PATH_SAVE_LOG + File.separator + ticket + ".txt" );
+        File file = new File( ConfigurationManager.getInstance().getProperty( "ch.home", System.getProperty( "user.home" ) + File.separator + "CommitHistory" ) + File.separator + ticket + ".txt" );
 
         try
         {
@@ -334,15 +332,18 @@ public class ApplicationController
         TrayIcon.getInstance().updateActions( visible );
         trayDialog.setVisible( visible );
         
-        SwingUtilities.invokeLater( new Runnable()
+        if ( Boolean.valueOf( ConfigurationManager.getInstance().getProperty( "ch.top", "true" ) ) )
         {
-            @Override
-            public void run()
+            SwingUtilities.invokeLater( new Runnable()
             {
-                trayDialog.requestFocusInWindow();
-                trayDialog.setAlwaysOnTop( true );
-            }
-        } );
+                @Override
+                public void run()
+                {
+                    trayDialog.requestFocusInWindow();
+                    trayDialog.setAlwaysOnTop( true );
+                }
+            } );
+        }
     }
     
     /**
