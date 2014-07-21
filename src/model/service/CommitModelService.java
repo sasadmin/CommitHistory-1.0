@@ -1,7 +1,6 @@
 package model.service;
 
 import controller.ApplicationController;
-import controller.ConfigurationManager;
 import util.FileUtilities;
 import data.Commit;
 import java.io.File;
@@ -53,9 +52,6 @@ public class CommitModelService
         if ( !msgCommit.trim().isEmpty() )
         {
             FileUtilities.saveText( file, text + msgCommit + "\n" );
-        
-            ConfigurationManager.getInstance().setProperty( commit.getRevision()+ "|" + commit.getTicket(), commit.getVersion() );
-            ConfigurationManager.getInstance().save();
         }
     }
 }

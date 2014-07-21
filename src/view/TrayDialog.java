@@ -85,10 +85,11 @@ public class TrayDialog
      */
     private void saveCommit()
     {
-        ApplicationController.getInstance().saveCommit( obtainInput() );
-        
-        ticketField.refreshPossibility();
-        versionField.refreshPossibility();
+        if ( ApplicationController.getInstance().saveCommit( obtainInput() ) )
+        {
+            ticketField.refreshPossibility();
+            versionField.refreshPossibility();
+        }
     }
     
     /**

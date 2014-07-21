@@ -129,7 +129,7 @@ public class ApplicationController
             
             if ( version.length != 4 )
             {
-                String msg = "A versão informada não é valida!" ;
+                String msg = "A versão informada não é valida" ;
                 
                 validateInfo.append( validateInfo.toString().isEmpty() ? msg : "\n" + msg );
             }
@@ -139,7 +139,7 @@ public class ApplicationController
         {
             if( isSave( commit ) )
             {
-                String msg = "Esta revisão já está associada a este ticket!";
+                String msg = "Esta revisão já está associada a este ticket";
                 
                 if ( commit.getVersion().trim().isEmpty() )
                 {
@@ -163,12 +163,15 @@ public class ApplicationController
     }
     
     /**
-     * save
+     * saveCommit
      * 
-     * @param commit
+     * @param commit Commit
+     * @return boolean
      */
-    public void saveCommit( Commit commit )
+    public boolean saveCommit( Commit commit )
     {
+        boolean save = false;
+        
         if ( commit != null && validateCommit( commit ) )
         {
             try
@@ -178,8 +181,7 @@ public class ApplicationController
                 if( !isSave( commit ) )
                 {
                     ModelManager.getInstance().getCommitModel().saveCommit( commit );
-                    trayDialog.clearInputs();
-                    
+
                     msg = "Commit salvo com sucesso!";
                 }
                 
@@ -190,7 +192,17 @@ public class ApplicationController
                     msg = msg.trim().isEmpty() ? "TicketHistory assinado com sucesso!" : msg + "\nTicketHistory assinado com sucesso!";
                 }
                 
-                Display.info( msg );
+                save = !msg.isEmpty(); 
+                
+                if ( save )
+                {
+                    ConfigurationManager.getInstance().setProperty( commit.getRevision()+ "|" + commit.getTicket(), commit.getVersion() );
+                    ConfigurationManager.getInstance().save();
+                    
+                    trayDialog.clearInputs();
+                    
+                    Display.info( msg );
+                }
             }
             
             catch ( Exception e )
@@ -198,6 +210,8 @@ public class ApplicationController
                 ApplicationController.getInstance().handleException( e );
             }
         }
+        
+        return save;
     }
     
     /**
@@ -218,9 +232,9 @@ public class ApplicationController
      */
     private boolean isSave( Commit commit )
     {
-        String value = ConfigurationManager.getInstance().getProperty( commit.getRevision()+ "|" + commit.getTicket() );
+        String value = ConfigurationManager.getInstance().getProperty( commit.getRevision()+ "|" + commit.getTicket(), null );
         
-        return !value.trim().isEmpty();
+        return value != null;
     }
     
     /**

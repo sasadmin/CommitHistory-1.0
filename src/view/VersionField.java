@@ -1,7 +1,6 @@
 package view;
 
 import controller.ConfigurationManager;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,6 +22,8 @@ public class VersionField
      */
     public final void refreshPossibility()
     {
+        removeAllPossibilities();
+        
         Set<String> keys = ConfigurationManager.getInstance().getStringPropertyNames();
         
         Set<String> versions = new HashSet();

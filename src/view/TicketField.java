@@ -19,7 +19,7 @@ public class TicketField
         {
             MaskFormatter maskData = new MaskFormatter( "TSI-#####" );
             maskData.install( this );
-            
+
             refreshPossibility();
         }
         
@@ -35,6 +35,8 @@ public class TicketField
      */
     public final void refreshPossibility()
     {
+        removeAllPossibilities();
+        
         Set<String> keys = ConfigurationManager.getInstance().getStringPropertyNames();
        
         Set<String> values = new HashSet();
