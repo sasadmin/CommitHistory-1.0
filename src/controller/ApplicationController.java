@@ -90,13 +90,22 @@ public class ApplicationController
         
         if ( validateInfo.toString().isEmpty() )
         {
-            String value = ConfigurationManager.getInstance().getProperty( commit.getRevision() );
-            
-            if( !value.isEmpty() && Boolean.valueOf( value ) )
+            if( isSave( commit ) )
             {
-                String msg = "Esta revisão já está associada a este ticket!" ;
+                String msg = "Esta revisão já está associada a este ticket!";
                 
-                validateInfo.append( validateInfo.toString().isEmpty() ? msg : "\n" + msg );
+                if ( isSigned( commit ) )
+                {
+                    validateInfo.append( msg );
+                }
+                else
+                {
+                    if ( commit.getVersion().trim().isEmpty() )
+                    {
+                        validateInfo.append( msg );
+                        validateInfo.append( "\nInforme a versão caso deseje assinar o Ticket History" );
+                    }
+                }
             }
         }
         
@@ -119,19 +128,24 @@ public class ApplicationController
         {
             try
             {
-                String value = ConfigurationManager.getInstance().getProperty( commit.getRevision()+ "-" + commit.getTicket() );
-            
-                if( value.isEmpty() )
+                String msg = "";
+                
+                if( !isSave( commit ) )
                 {
                     ModelManager.getInstance().getCommitModel().saveCommit( commit );
                     trayDialog.clearInputs();
-                    Display.info( "Commit salvo com sucesso" );
+                    
+                    msg = "Commit salvo com sucesso!";
                 }
                 
-                if ( ! commit.getVersion().trim().isEmpty() )
+                if ( !commit.getVersion().trim().isEmpty() )
                 {
                     signTicketHistory( commit );
+                    
+                    msg = msg.trim().isEmpty() ? "TicketHistory assinado com sucesso!" : msg + "\nTicketHistory assinado com sucesso!";
                 }
+                
+                Display.info( msg );
             }
             
             catch ( Exception e )
@@ -149,6 +163,37 @@ public class ApplicationController
     private void signTicketHistory( Commit commit )
     {
 //        TicketHistoryController.assign( commit );
+    }
+    
+    /**
+     * isSave
+     * 
+     * @param commit Commit
+     * @return boolean
+     */
+    private boolean isSave( Commit commit )
+    {
+        String value = ConfigurationManager.getInstance().getProperty( commit.getRevision()+ "|" + commit.getTicket() );
+        
+        return !value.trim().isEmpty();
+    }
+    
+    /**
+     * isSigned
+     * 
+     * @param commit Commit
+     * @return boolean
+     */
+    public boolean isSigned( Commit commit )
+    {
+        String assign = ConfigurationManager.getInstance().getProperty( commit.getRevision()+ "|" + commit.getTicket() );
+        
+        if ( !assign.trim().isEmpty() )
+        {
+            return Boolean.valueOf( assign );
+        }
+        
+        return false;
     }
     
     /**

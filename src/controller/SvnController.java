@@ -85,7 +85,8 @@ public class SvnController
         {
             line = "";
         }
-        else
+                
+        else if ( !line.isEmpty() )
         {
             line += "\n";
         }

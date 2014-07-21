@@ -4,7 +4,6 @@ import controller.ConfigurationManager;
 import util.FileUtilities;
 import data.Commit;
 import java.io.File;
-import java.io.FilenameFilter;
 import model.CommitModel;
 import controller.SvnController;
 
@@ -43,36 +42,34 @@ public class CommitModelService
         
         if ( !work.exists() )
         {
-            work = FileUtilities.createFile( work );
+            work.mkdir();
         }
         
         if ( work.isDirectory() )
         {
-            final String pathTicket = commit.getTicket() + ".txt";
+            File file = new File( path + File.separator + commit.getTicket() + ".txt" );
+            String msgCommit = "";
             
-            File[] files = work.listFiles( new FilenameFilter()
+            if ( file.exists() )
             {
-                @Override
-                public boolean accept( File dir, String name )
+                String text = FileUtilities.loadText( file );
+                
+                msgCommit = SvnController.obtainLogCommit( commit );
+                
+                if ( !msgCommit.trim().isEmpty() )
                 {
-                    return name.equalsIgnoreCase( pathTicket );
+                    saveText( commit, file, text + msgCommit + "\n" );
                 }
-            });
-            
-            if ( files.length == 1 )
-            {
-                File f = files[0];
-                
-                String text = FileUtilities.loadText( f );
-                
-                saveText( commit, f, text + SvnController.obtainLogCommit( commit ) );
             }
                     
             else
             {
-                File ticket = new File( path + File.separator + pathTicket );
+                 msgCommit = SvnController.obtainLogCommit( commit );
                 
-                saveText( commit, ticket, SvnController.obtainLogCommit( commit ) );
+                if ( !msgCommit.trim().isEmpty() )
+                {
+                    saveText( commit, file, msgCommit + "\n" );
+                }
             }
         }
     }
@@ -89,7 +86,7 @@ public class CommitModelService
     {
         FileUtilities.saveText( file, text );
         
-        ConfigurationManager.getInstance().setProperty( commit.getRevision()+ "-" + commit.getTicket(), String.valueOf( !commit.getVersion().isEmpty() ) );
+        ConfigurationManager.getInstance().setProperty( commit.getRevision()+ "|" + commit.getTicket(), String.valueOf( !commit.getVersion().isEmpty() ) );
         ConfigurationManager.getInstance().save();
     }
 }
