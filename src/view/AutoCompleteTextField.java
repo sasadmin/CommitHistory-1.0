@@ -317,11 +317,6 @@ public class AutoCompleteTextField extends JFormattedTextField implements KeyLis
     @Override
     public void keyPressed( KeyEvent e )
     {
-        if ( e.getKeyCode() == KeyEvent.VK_ENTER )
-        {
-            this.setText( this.getCurrentGuess() );
-        }
-
         if ( e.getKeyCode() == KeyEvent.VK_RIGHT )
         {
             this.setText( this.getCurrentGuess() );

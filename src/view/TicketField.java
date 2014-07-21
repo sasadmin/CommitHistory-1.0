@@ -1,6 +1,9 @@
 package view;
 
 import controller.ApplicationController;
+import controller.ConfigurationManager;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.text.MaskFormatter;
 
 /**
@@ -16,16 +19,42 @@ public class TicketField
         {
             MaskFormatter maskData = new MaskFormatter( "TSI-#####" );
             maskData.install( this );
+            
+            refreshPossibility();
         }
         
         catch ( Exception e )
         {
             ApplicationController.getInstance().handleException( e );
         }
+    }
+
+    /**
+     * refreshPossibility
+     * 
+     */
+    public final void refreshPossibility()
+    {
+        Set<String> keys = ConfigurationManager.getInstance().getStringPropertyNames();
+       
+        Set<String> values = new HashSet();
         
-        addPossibility( "TSI-28549" );
-        addPossibility( "TSI-28123" );
-        addPossibility( "TSI-24558" );
-        addPossibility( "TSI-24559" );
+        for ( String va : keys )
+        {
+            if ( va.contains( "|" ) )
+            {
+                String[] value = va.split( "\\|" );
+
+                if ( value.length == 2 )
+                {
+                    values.add( value[1] );
+                }
+            }
+        }
+        
+        for( String value : values )
+        {
+            addPossibility( value );
+        }
     }
 }

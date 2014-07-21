@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  *
@@ -29,7 +30,7 @@ public class ConfigurationManager
 
         return defaultInstance;
     }
-
+    
     /**
      * ConfigurationManager
      * 
@@ -99,6 +100,16 @@ public class ConfigurationManager
                 out.close();
             }
         }
+    }
+    
+    /**
+     * getStringPropertyNames
+     * 
+     * @return Set&lt;String&gt;
+     */
+    public Set<String> getStringPropertyNames()
+    {
+        return defaultProperties.stringPropertyNames();
     }
     
     /**

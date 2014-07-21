@@ -54,7 +54,7 @@ public class CommitModelService
         {
             FileUtilities.saveText( file, text + msgCommit + "\n" );
         
-            ConfigurationManager.getInstance().setProperty( commit.getRevision()+ "|" + commit.getTicket(), String.valueOf( !commit.getVersion().isEmpty() ) );
+            ConfigurationManager.getInstance().setProperty( commit.getRevision()+ "|" + commit.getTicket(), commit.getVersion() );
             ConfigurationManager.getInstance().save();
         }
     }

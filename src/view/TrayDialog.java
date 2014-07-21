@@ -73,7 +73,6 @@ public class TrayDialog
      */
     public void clearInputs()
     {
-//        ticketField.setText( "" );
         revisionField.setText( "" );
         versionField.setText( "" );
         
@@ -87,6 +86,9 @@ public class TrayDialog
     private void saveCommit()
     {
         ApplicationController.getInstance().saveCommit( obtainInput() );
+        
+        ticketField.refreshPossibility();
+        versionField.refreshPossibility();
     }
     
     /**

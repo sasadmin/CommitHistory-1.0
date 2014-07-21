@@ -1,5 +1,10 @@
 package view;
 
+import controller.ConfigurationManager;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  *
  * @author LHG
@@ -9,7 +14,30 @@ public class VersionField
 {
     public VersionField()
     {
-        addPossibility( "SA-WEB-7.0.0.0" );
-        addPossibility( "SA-DESKTOP-7.0.0.0" );
+        refreshPossibility();
+    }
+    
+    /**
+     * refreshPossibility
+     * 
+     */
+    public final void refreshPossibility()
+    {
+        Set<String> keys = ConfigurationManager.getInstance().getStringPropertyNames();
+        
+        Set<String> versions = new HashSet();
+       
+        for ( String va : keys )
+        {
+            if ( va.contains( "|" ) )
+            {
+                versions.add( ConfigurationManager.getInstance().getProperty( va ) );
+            }
+        }
+        
+        for( String value : versions )
+        {
+            addPossibility( value );
+        }
     }
 }

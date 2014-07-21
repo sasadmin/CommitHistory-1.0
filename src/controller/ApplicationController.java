@@ -141,17 +141,15 @@ public class ApplicationController
             {
                 String msg = "Esta revisão já está associada a este ticket!";
                 
-                if ( isSigned( commit ) )
+                if ( commit.getVersion().trim().isEmpty() )
                 {
                     validateInfo.append( msg );
+                    validateInfo.append( "\nInforme a versão caso deseje assinar o Ticket History" );
                 }
-                else
+                
+                else if ( commit.getVersion().equals( ConfigurationManager.getInstance().getProperty( commit.getRevision()+ "|" + commit.getTicket() ) ) )
                 {
-                    if ( commit.getVersion().trim().isEmpty() )
-                    {
-                        validateInfo.append( msg );
-                        validateInfo.append( "\nInforme a versão caso deseje assinar o Ticket History" );
-                    }
+                    validateInfo.append( msg );
                 }
             }
         }
@@ -223,24 +221,6 @@ public class ApplicationController
         String value = ConfigurationManager.getInstance().getProperty( commit.getRevision()+ "|" + commit.getTicket() );
         
         return !value.trim().isEmpty();
-    }
-    
-    /**
-     * isSigned
-     * 
-     * @param commit Commit
-     * @return boolean
-     */
-    public boolean isSigned( Commit commit )
-    {
-        String assign = ConfigurationManager.getInstance().getProperty( commit.getRevision()+ "|" + commit.getTicket() );
-        
-        if ( !assign.trim().isEmpty() )
-        {
-            return Boolean.valueOf( assign );
-        }
-        
-        return false;
     }
     
     /**
