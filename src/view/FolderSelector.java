@@ -84,7 +84,7 @@ public class FolderSelector
             {
                 if ( chooser.showOpenDialog( null ) == JFileChooser.APPROVE_OPTION )
                 {
-                    pathField.setText( chooser.getCurrentDirectory().getAbsolutePath() );
+                    pathField.setText( chooser.getSelectedFile().getAbsolutePath() );
                 }
             }
         } );
