@@ -28,6 +28,7 @@ public class ApplicationController
     public static final String applicationName = "Commit History";
     
     public static final Font defaultFont = new Font( "monospaced", Font.BOLD, 12 );
+    public static final Font defaultNames = new Font( "monospaced", Font.PLAIN, 13 );
     public static final Font defaultTitleFont = new Font( "monospaced", Font.BOLD, 15 );
     
     public static final Dimension defaultDimension = new Dimension( 250, 150 );

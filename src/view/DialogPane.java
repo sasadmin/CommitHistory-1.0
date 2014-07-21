@@ -11,7 +11,7 @@ import javax.swing.border.LineBorder;
 
 /**
  *
- * @author Galimberti
+ * @author LHG
  */
 public class DialogPane
     extends JPanel

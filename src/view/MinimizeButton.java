@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 
 /**
  *
- * @author Galimberti
+ * @author LHG
  */
 public class MinimizeButton
     extends JLabel

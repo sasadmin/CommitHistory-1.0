@@ -2,7 +2,7 @@ package data;
 
 /**
  *
- * @author Galimberti
+ * @author LHG
  */
 public class Commit
 {

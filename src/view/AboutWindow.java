@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package view;
 
 import controller.ApplicationController;
@@ -12,14 +6,13 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
 
 /**
  *
- * @author Galimberti
+ * @author LHG
  */
 public class AboutWindow
     extends DefaultWindow
@@ -42,7 +35,7 @@ public class AboutWindow
         setPreferredSize( new Dimension( 220, 130 ) );
         
         aboutLabel.setText( "CommitHistory 1.0" );
-        aboutLabel.setFont( ApplicationController.defaultFont );
+        aboutLabel.setFont( ApplicationController.defaultTitleFont );
         aboutLabel.setForeground( Color.BLACK );
         
         developersLabel.setText( "Developed by:" );
@@ -50,57 +43,59 @@ public class AboutWindow
         developersLabel.setForeground( Color.BLACK );
         
         galimbertiLabel.setText( "Luiz Galimberti" );
-        galimbertiLabel.setFont( ApplicationController.defaultFont );
+        galimbertiLabel.setFont( ApplicationController.defaultNames );
         galimbertiLabel.setForeground( Color.BLACK );
         
         ivanLabel.setText( "Ivan Lampert" );
-        ivanLabel.setFont( ApplicationController.defaultFont );
+        ivanLabel.setFont( ApplicationController.defaultNames );
         ivanLabel.setForeground( Color.BLACK );
         
         alexLabel.setText( "Alex Carvalho" );
-        alexLabel.setFont( ApplicationController.defaultFont );
+        alexLabel.setFont( ApplicationController.defaultNames );
         alexLabel.setForeground( Color.BLACK );
-        
-        closeButton.setText( "Fechar" );
-        closeButton.setFont( ApplicationController.defaultFont );
-        closeButton.setForeground( Color.BLACK );
         
         setLayout( new GridBagLayout() );
         
-        add( aboutLabel, new GridBagConstraints( 0, 0, 2, 1, 1.0, 0.0, 
-                                                 GridBagConstraints.CENTER, GridBagConstraints.NONE, 
-                                                 new Insets( 0, 0, 0, 0 ), 0, 0 ) );
+        add( closeButton, 
+             new GridBagConstraints( 0, 0, 1, 1, 1.0, 0.0, 
+                                     GridBagConstraints.EAST, GridBagConstraints.NONE, 
+                                     new Insets( 10, 0, 0, 18 ), 0, 0 ) );
         
-        add( developersLabel, new GridBagConstraints( 0, 1, 1, 1, 0.0, 0.0, 
-                                                      GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, 
-                                                      new Insets( 10, 10, 0, 0 ), 0, 0 ) );
+        add( aboutLabel, 
+             new GridBagConstraints( 0, 1, 1, 1, 0.0, 0.0, 
+                                     GridBagConstraints.CENTER, GridBagConstraints.NONE, 
+                                     new Insets( 0, 0, 0, 0 ), 0, 0 ) );
         
-        add( galimbertiLabel, new GridBagConstraints( 1, 1, 2, 1, 1.0, 0.0, 
-                                                      GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, 
-                                                      new Insets( 10, 0, 0, 0 ), 0, 0 ) );
+        add( developersLabel, 
+             new GridBagConstraints( 0, 2, 1, 1, 0.0, 0.0, 
+                                     GridBagConstraints.CENTER, GridBagConstraints.NONE, 
+                                     new Insets( 4, 0, 2, 0 ), 0, 0 ) );
         
-        add( ivanLabel, new GridBagConstraints( 1, 2, 2, 1, 1.0, 0.0, 
-                                                GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, 
-                                                new Insets( 0, 0, 0, 0 ), 0, 0 ) );
+        add( galimbertiLabel, 
+             new GridBagConstraints( 0, 3, 1, 1, 0.0, 0.0, 
+                                     GridBagConstraints.CENTER, GridBagConstraints.NONE, 
+                                     new Insets( 0, 0, 0, 0 ), 0, 0 ) );
         
-        add( alexLabel, new GridBagConstraints( 1, 3, 2, 1, 1.0, 0.0, 
-                                                GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, 
-                                                new Insets( 0, 0, 0, 0 ), 0, 0 ) );
+        add( alexLabel, 
+             new GridBagConstraints( 0, 4, 1, 1, 0.0, 0.0, 
+                                     GridBagConstraints.CENTER, GridBagConstraints.NONE, 
+                                     new Insets( 0, 0, 0, 0 ), 0, 0 ) );
         
-        add( closeButton, new GridBagConstraints( 0, 4, 2, 1, 1.0, 0.0, 
-                                                  GridBagConstraints.CENTER, GridBagConstraints.NONE, 
-                                                  new Insets( 10, 0, 0, 0 ), 0, 0 ) );
+        add( ivanLabel, 
+             new GridBagConstraints( 0, 5, 1, 1, 0.0, 0.0, 
+                                     GridBagConstraints.CENTER, GridBagConstraints.NONE, 
+                                     new Insets( 0, 0, 2, 0 ), 0, 0 ) );
         
-        closeButton.addActionListener( new ActionListener()
-        {
+        closeButton.addMouseListener( new MouseAdapter()  
+        {  
             @Override
-            public void actionPerformed( ActionEvent e )
-            {
+            public void mouseClicked(MouseEvent e)  
+            {  
                 ApplicationController.getInstance().closeWindow();
-            }
+            }  
         } );
     }
-    
+
     private JLabel aboutLabel = new JLabel();
     private JLabel developersLabel = new JLabel();
     
@@ -108,5 +103,5 @@ public class AboutWindow
     private JLabel ivanLabel = new JLabel();
     private JLabel alexLabel = new JLabel();
     
-    private JButton closeButton = new JButton();
+    private CloseButton closeButton = new CloseButton();
 }

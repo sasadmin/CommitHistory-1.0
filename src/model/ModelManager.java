@@ -4,7 +4,7 @@ import model.service.CommitModelService;
 
 /**
  *
- * @author Ivan lampert
+ * @author IL
  */
 public class ModelManager 
 {

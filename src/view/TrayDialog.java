@@ -28,7 +28,7 @@ import javax.swing.JWindow;
 
 /**
  *
- * @author Galimberti
+ * @author LHG
  */
 public class TrayDialog
     extends JWindow
@@ -127,53 +127,64 @@ public class TrayDialog
 
         final Insets insets = new Insets( 5, 10, 0, 10 );
         
-        pane.add( applicationNameLabel, new GridBagConstraints( 0, 0, 2, 1, 1.0, 0.0, 
-                                                          GridBagConstraints.WEST, GridBagConstraints.NONE, 
-                                                          insets, 0, 0 ) );
+        pane.add( applicationNameLabel, 
+                  new GridBagConstraints( 0, 0, 2, 1, 1.0, 0.0, 
+                                          GridBagConstraints.WEST, GridBagConstraints.NONE, 
+                                          insets, 0, 0 ) );
         
-        pane.add( minimizeButton, new GridBagConstraints( 2, 0, 1, 1, 0.0, 0.0, 
-                                                          GridBagConstraints.CENTER, GridBagConstraints.NONE, 
-                                                          insets, 0, 0 ) );
+        pane.add( minimizeButton, 
+                  new GridBagConstraints( 2, 0, 1, 1, 0.0, 0.0, 
+                                          GridBagConstraints.CENTER, GridBagConstraints.NONE, 
+                                          insets, 0, 0 ) );
         
-        pane.add( ticketLabel, new GridBagConstraints( 0, 1, 1, 1, 0.0, 0.0, 
-                                                       GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, 
-                                                       insets, 0, 0 ) );
+        pane.add( ticketLabel, 
+                  new GridBagConstraints( 0, 1, 1, 1, 0.0, 0.0, 
+                                          GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, 
+                                          insets, 0, 0 ) );
         
-        pane.add( ticketField, new GridBagConstraints( 1, 1, 2, 1, 1.0, 0.0, 
-                                                       GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, 
-                                                       insets, 0, 0 ) );
+        pane.add( ticketField, 
+                  new GridBagConstraints( 1, 1, 2, 1, 1.0, 0.0, 
+                                          GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, 
+                                          insets, 0, 0 ) );
         
-        pane.add( revisionLabel, new GridBagConstraints( 0, 2, 1, 1, 0.0, 0.0, 
-                                                         GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, 
-                                                         insets, 0, 0 ) );
+        pane.add( revisionLabel, 
+                  new GridBagConstraints( 0, 2, 1, 1, 0.0, 0.0, 
+                                          GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, 
+                                          insets, 0, 0 ) );
         
-        pane.add( revisionField, new GridBagConstraints( 1, 2, 2, 1, 1.0, 0.0, 
-                                                         GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, 
-                                                         insets, 0, 0 ) );
+        pane.add( revisionField, 
+                  new GridBagConstraints( 1, 2, 2, 1, 1.0, 0.0, 
+                                          GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, 
+                                          insets, 0, 0 ) );
         
-        pane.add( versionLabel, new GridBagConstraints( 0, 3, 1, 1, 0.0, 0.0, 
-                                                        GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, 
-                                                        insets, 0, 0 ) );
+        pane.add( versionLabel, 
+                  new GridBagConstraints( 0, 3, 1, 1, 0.0, 0.0, 
+                                          GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, 
+                                          insets, 0, 0 ) );
         
-        pane.add( versionField, new GridBagConstraints( 1, 3, 2, 1, 1.0, 0.0, 
-                                                        GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, 
-                                                        insets, 0, 0 ) );
+        pane.add( versionField, 
+                  new GridBagConstraints( 1, 3, 2, 1, 1.0, 0.0, 
+                                          GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, 
+                                          insets, 0, 0 ) );
         
-        pane.add( buttonsPanel, new GridBagConstraints( 0, 4, 4, 1, 1.0, 1.0, 
-                                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH, 
-                                                        insets, 0, 0 ) );
+        pane.add( buttonsPanel, 
+                  new GridBagConstraints( 0, 4, 4, 1, 1.0, 1.0, 
+                                          GridBagConstraints.CENTER, GridBagConstraints.BOTH, 
+                                          insets, 0, 0 ) );
         
         buttonsPanel.setOpaque( false );
         
         buttonsPanel.setLayout( new GridBagLayout() );
         
-        buttonsPanel.add( menuButton, new GridBagConstraints( 0, 0, 1, 1, 1.0, 0.0, 
-                                                              GridBagConstraints.WEST, GridBagConstraints.NONE, 
-                                                              new Insets( 10, 0, 10, 5 ), 0, 0 ) );
+        buttonsPanel.add( menuButton, 
+                          new GridBagConstraints( 0, 0, 1, 1, 1.0, 0.0, 
+                                                  GridBagConstraints.WEST, GridBagConstraints.NONE, 
+                                                  new Insets( 10, 0, 10, 5 ), 0, 0 ) );
         
-        buttonsPanel.add( saveButton, new GridBagConstraints( 1, 0, 1, 1, 1.0, 0.0, 
-                                                              GridBagConstraints.EAST, GridBagConstraints.NONE, 
-                                                              new Insets( 10 ,5, 10, 0 ), 0, 0 ) );
+        buttonsPanel.add( saveButton, 
+                          new GridBagConstraints( 1, 0, 1, 1, 1.0, 0.0, 
+                                                  GridBagConstraints.EAST, GridBagConstraints.NONE, 
+                                                  new Insets( 10 ,5, 10, 0 ), 0, 0 ) );
         
         menuButton.addMouseListener( new MouseAdapter() 
         {

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
 import controller.ApplicationController;
@@ -13,7 +9,7 @@ import javax.swing.JPopupMenu;
 
 /**
  *
- * @author lhg
+ * @author LHG
  */
 public class PopupMenu
     extends JPopupMenu 
