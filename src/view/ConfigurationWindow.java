@@ -33,7 +33,7 @@ public class ConfigurationWindow
      */
     private void initConfig()
     {
-        String path = ConfigurationManager.getInstance().getProperty( "ch.home" );
+        String path = ConfigurationManager.getInstance().getProperty( "ch.home", System.getProperty( "user.home" ) + File.separator + "CommitHistory" );
         
         if ( path != null && !path.isEmpty() )
         {
