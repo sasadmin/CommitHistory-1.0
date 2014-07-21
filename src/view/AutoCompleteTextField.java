@@ -7,6 +7,8 @@ package view;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.Rectangle2D;
@@ -79,10 +81,26 @@ public class AutoCompleteTextField extends JFormattedTextField implements KeyLis
         this.possibilities = new ArrayList<String>();
         this.incompleteColor = Color.GRAY.brighter();
         this.currentGuess = -1;
-        this.areGuessing = false;
         this.caseSensitive = caseSensitive;
         this.addKeyListener( this );
         this.getDocument().addDocumentListener( this );
+        
+        addFocusListener( new FocusAdapter()
+        {
+            @Override
+            public void focusGained( FocusEvent e )
+            {
+                areGuessing = true;
+                repaint();
+            }
+
+            @Override
+            public void focusLost( FocusEvent e )
+            {
+                areGuessing = false;
+                repaint();
+            }
+        } );
     }
 
     /**
@@ -185,11 +203,67 @@ public class AutoCompleteTextField extends JFormattedTextField implements KeyLis
         }
     }
 
+    private void findNextGuess()
+    {
+        String entered = this.getText().trim();
+        
+        if ( !this.caseSensitive )
+        {
+            entered = entered.toLowerCase();
+        }
+
+        for ( int i = 0; i < this.possibilities.size(); i++ )
+        {
+            String possibility = this.possibilities.get( i );
+            
+            if ( !this.caseSensitive )
+            {
+                possibility = possibility.toLowerCase();
+            }
+            
+            if ( possibility.startsWith( entered ) && i > currentGuess )
+            {
+                this.currentGuess = i;
+                return;
+            }
+        }
+        
+        currentGuess = -1;
+    }
+
+    private void findPreviousGuess()
+    {
+//        String entered = this.getText().trim();
+//        
+//        if ( !this.caseSensitive )
+//        {
+//            entered = entered.toLowerCase();
+//        }
+//        
+//        int previousGuess = currentGuess;
+//
+//        for ( int i = 0; i < this.possibilities.size(); i++ )
+//        {
+//            String possibility = this.possibilities.get( i );
+//            
+//            if ( !this.caseSensitive )
+//            {
+//                possibility = possibility.toLowerCase();
+//            }
+//            
+//            if ( possibility.startsWith( entered ) )
+//            {
+//                
+//                this.currentGuess = i;
+//                return;
+//            }
+//        }
+    }
+
     @Override
     public void setText( String text )
     {
         super.setText( text );
-        this.areGuessing = false;
         this.currentGuess = -1;
     }
 
@@ -209,13 +283,7 @@ public class AutoCompleteTextField extends JFormattedTextField implements KeyLis
             guess = guess.toLowerCase();
         }
 
-        if ( !( guess.startsWith( entered ) ) )
-        {
-            this.areGuessing = false;
-        }
-
-        if ( entered != null && !( entered.equals( "" ) )
-             && this.areGuessing )
+        if ( entered != null && areGuessing )
         {
             String subGuess = drawGuess.substring( entered.length(), drawGuess.length() );
             Rectangle2D subGuessBounds = g.getFontMetrics().getStringBounds( drawGuess, g );
@@ -237,21 +305,27 @@ public class AutoCompleteTextField extends JFormattedTextField implements KeyLis
     {
         if ( e.getKeyCode() == KeyEvent.VK_ENTER )
         {
-            if ( this.areGuessing )
-            {
-                this.setText( this.getCurrentGuess() );
-                this.areGuessing = false;
-            }
+            this.setText( this.getCurrentGuess() );
         }
 
         if ( e.getKeyCode() == KeyEvent.VK_RIGHT )
         {
-            if ( this.areGuessing )
-            {
-                this.setText( this.getCurrentGuess() );
-                this.areGuessing = false;
-                e.consume();
-            }
+            this.setText( this.getCurrentGuess() );
+            e.consume();
+        }
+
+        if ( e.getKeyCode() == KeyEvent.VK_DOWN )
+        {
+            findNextGuess();
+            repaint();
+            e.consume();
+        }
+
+        if ( e.getKeyCode() == KeyEvent.VK_UP )
+        {
+            findPreviousGuess();
+            repaint();
+            e.consume();
         }
     }
 
@@ -263,38 +337,13 @@ public class AutoCompleteTextField extends JFormattedTextField implements KeyLis
     @Override
     public void insertUpdate( DocumentEvent e )
     {
-        String temp = this.getText();
-
-        if ( temp.length() == 1 )
-        {
-            this.areGuessing = true;
-        }
-
-        if ( this.areGuessing )
-        {
-            this.findCurrentGuess();
-        }
-
+        this.findCurrentGuess();
     }
 
     @Override
     public void removeUpdate( DocumentEvent e )
     {
-        String temp = this.getText();
-
-        if ( !( this.areGuessing ) )
-        {
-            this.areGuessing = true;
-        }
-
-        if ( temp.length() == 0 )
-        {
-            this.areGuessing = false;
-        }
-        else if ( this.areGuessing )
-        {
-            this.findCurrentGuess();
-        }
+        this.findCurrentGuess();
     }
 
     @Override

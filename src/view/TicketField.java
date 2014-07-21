@@ -34,14 +34,4 @@ public class TicketField
         addPossibility( "TSI-24558" );
         addPossibility( "TSI-24559" );
     }
-
-    /**
-     * selectAll
-     * 
-     */
-    @Override
-    public void selectAll()
-    {
-        super.select( "TSI-".length(), "TSI-#####".length() );
-    }
 }
