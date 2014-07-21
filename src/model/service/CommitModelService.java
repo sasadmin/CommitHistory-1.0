@@ -1,5 +1,6 @@
 package model.service;
 
+import controller.ApplicationController;
 import controller.ConfigurationManager;
 import util.FileUtilities;
 import data.Commit;
@@ -36,57 +37,25 @@ public class CommitModelService
             throw new Exception( "Commit is null!" );
         }
         
-        String path = System.getProperty( "user.home" ) + File.separator + "CommitHistory";
-        
-        File work = new File( path );
+        File work = new File( ApplicationController.PATH_SAVE_LOG );
         
         if ( !work.exists() )
         {
             work.mkdir();
         }
         
-        if ( work.isDirectory() )
+        File file = ApplicationController.getInstance().getFile( commit.getTicket(), true );
+
+        String text = FileUtilities.loadText( file );
+
+        String msgCommit = SvnController.obtainLogCommit( commit );
+
+        if ( !msgCommit.trim().isEmpty() )
         {
-            File file = new File( path + File.separator + commit.getTicket() + ".txt" );
-            String msgCommit = "";
-            
-            if ( file.exists() )
-            {
-                String text = FileUtilities.loadText( file );
-                
-                msgCommit = SvnController.obtainLogCommit( commit );
-                
-                if ( !msgCommit.trim().isEmpty() )
-                {
-                    saveText( commit, file, text + msgCommit + "\n" );
-                }
-            }
-                    
-            else
-            {
-                 msgCommit = SvnController.obtainLogCommit( commit );
-                
-                if ( !msgCommit.trim().isEmpty() )
-                {
-                    saveText( commit, file, msgCommit + "\n" );
-                }
-            }
-        }
-    }
-    
-    /**
-     * saveText
-     * 
-     * @param commit Commit
-     * @param file File
-     * @param text String
-     * @throws Exception
-     */
-    private void saveText( Commit commit, File file, String text ) throws Exception
-    {
-        FileUtilities.saveText( file, text );
+            FileUtilities.saveText( file, text + msgCommit + "\n" );
         
-        ConfigurationManager.getInstance().setProperty( commit.getRevision()+ "|" + commit.getTicket(), String.valueOf( !commit.getVersion().isEmpty() ) );
-        ConfigurationManager.getInstance().save();
+            ConfigurationManager.getInstance().setProperty( commit.getRevision()+ "|" + commit.getTicket(), String.valueOf( !commit.getVersion().isEmpty() ) );
+            ConfigurationManager.getInstance().save();
+        }
     }
 }

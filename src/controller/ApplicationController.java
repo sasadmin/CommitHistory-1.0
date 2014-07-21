@@ -1,11 +1,17 @@
 package controller;
 
 import data.Commit;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.io.File;
 import javax.swing.SwingUtilities;
 import model.ModelManager;
 import util.Display;
+import util.FileUtilities;
 import view.DefaultWindow;
 import view.GlassPane;
 import view.TrayDialog;
@@ -25,6 +31,8 @@ public class ApplicationController
     public static final Font defaultTitleFont = new Font( "monospaced", Font.BOLD, 15 );
     
     public static final Dimension defaultDimension = new Dimension( 250, 150 );
+    
+    public static final String PATH_SAVE_LOG = System.getProperty( "user.home" ) + File.separator + "CommitHistory";
     
     private final TrayDialog trayDialog;
     
@@ -50,6 +58,44 @@ public class ApplicationController
         }
         
         return defaultInstance;
+    }
+    
+    /**
+     * getFile
+     * 
+     * @param ticket String
+     * @return File
+     */
+    public File getFile( String ticket )
+    {
+        return getFile( ticket, false );
+    }
+    
+    /**
+     * getFile
+     * 
+     * @param ticket String
+     * @param createNotExists boolean
+     * @return File
+     */
+    public File getFile( String ticket, boolean createNotExists )
+    {
+        File file = new File( PATH_SAVE_LOG + File.separator + ticket + ".txt" );
+
+        try
+        {
+            if ( !file.exists() && createNotExists )
+            {
+                FileUtilities.createFile( file );
+            }
+        }
+
+        catch ( Exception e )
+        {
+            handleException( e );
+        }
+        
+        return file;
     }
     
     /**
@@ -194,6 +240,75 @@ public class ApplicationController
         }
         
         return false;
+    }
+    
+    /**
+     * openFile
+     * 
+     * @param ticket String
+     */
+    public void openFile( String ticket )
+    {
+        try
+        {
+            File file = getFile( ticket );
+
+            if ( file.exists())
+            {
+                if ( Desktop.isDesktopSupported() )
+                {
+                    Desktop.getDesktop().open( file );
+                }
+                else
+                {
+                    Display.alert( "Desktop not suported!" );
+                }
+            }
+
+            else
+            {
+                Display.alert( "Arquivo não encontrado!" );
+            }
+        }
+        catch ( Exception e )
+        {
+            handleException( e );
+        }
+    }
+    
+    /**
+     * copyClipboard
+     * 
+     * @param ticket String
+     */
+    public void copyClipboard( String ticket )
+    {
+        try
+        {
+            File file = getFile( ticket );
+
+            if ( file.exists() )
+            {
+                String value = FileUtilities.loadText( file );
+
+                StringSelection stringSelection = new StringSelection( value );
+
+                Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+
+                clpbrd.setContents (stringSelection, null);
+                
+                Display.info( "Copiado para área de tranferência!" );
+            }
+            else
+            {
+                Display.alert( "Arquivo não encontrado!" );
+            }
+        }
+                
+        catch ( Exception e )
+        {
+            handleException( e );
+        }
     }
     
     /**

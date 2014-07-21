@@ -7,6 +7,7 @@ package view;
 
 import controller.ApplicationController;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -17,6 +18,8 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
@@ -94,7 +97,7 @@ public class TicketQueryWindow
             @Override
             public void actionPerformed( ActionEvent e )
             {
-                //TODO
+                ApplicationController.getInstance().openFile( ticketField.getText() );
             }
         } );
 
@@ -103,7 +106,7 @@ public class TicketQueryWindow
             @Override
             public void actionPerformed( ActionEvent e )
             {
-                //TODO
+                ApplicationController.getInstance().copyClipboard( ticketField.getText() );
             }
         } );
         
