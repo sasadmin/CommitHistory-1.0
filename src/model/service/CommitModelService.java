@@ -1,6 +1,7 @@
 package model.service;
 
 import controller.ApplicationController;
+import controller.ConfigurationManager;
 import util.FileUtilities;
 import data.Commit;
 import java.io.File;
@@ -36,7 +37,7 @@ public class CommitModelService
             throw new Exception( "Commit is null!" );
         }
         
-        File work = new File( ApplicationController.PATH_SAVE_LOG );
+        File work = new File( ConfigurationManager.getInstance().getProperty( "ch.home", System.getProperty( "user.home" ) + File.separator + "CommitHistory" ) );
         
         if ( !work.exists() )
         {
