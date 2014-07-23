@@ -25,13 +25,13 @@ public class PopupMenu
         ticketQueryItem.setIcon( IconFactory.getIcon( "/resources/ticket.png", 20 ) );
         
         textQueryItem.setText( "Consultar Texto" );
-        textQueryItem.setIcon( IconFactory.getIcon( "/resources/ticket.png", 20 ) );
+        textQueryItem.setIcon( IconFactory.getIcon( "/resources/text.png", 18 ) );
         
         configItem.setText( "Configurações" );
         configItem.setIcon( IconFactory.getIcon( "/resources/config.png", 20 ) );
         
-        add( ticketQueryItem );
         add( textQueryItem );
+        add( ticketQueryItem );
         add( configItem );
         
         ticketQueryItem.addActionListener( new ActionListener()
