@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -63,10 +64,19 @@ public class FindTextController
 
             if ( home.exists() )
             {
-                for( File f : home.listFiles() )
+                FileFilter filter = new FileFilter() 
+                {
+                    @Override
+                    public boolean accept( File pathname )
+                    {
+                        return pathname.getAbsolutePath().endsWith( ".txt" );
+                    }
+                }; 
+                
+                for( File f : home.listFiles( filter ) )
                 {
                     String text = FileUtilities.loadText( f );
-                    
+
                     processText( text );
                 }
                 
