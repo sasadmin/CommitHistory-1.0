@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
@@ -105,6 +107,19 @@ public class TicketQueryWindow
             public void actionPerformed( ActionEvent e )
             {
                 ApplicationController.getInstance().copyClipboard( ticketField.getText() );
+            }
+        } );
+        
+        ticketField.addKeyListener( new KeyAdapter()
+        {
+
+            @Override
+            public void keyPressed( KeyEvent e )
+            {
+                if ( e.getKeyCode() == KeyEvent.VK_ENTER )
+                {
+                    ApplicationController.getInstance().openFile( ticketField.getText() );
+                }
             }
         } );
         

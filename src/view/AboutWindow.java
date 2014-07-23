@@ -34,7 +34,7 @@ public class AboutWindow
         setSize( new Dimension( 220, 130 ) );
         setPreferredSize( new Dimension( 220, 130 ) );
         
-        aboutLabel.setText( "CommitHistory 1.0" );
+        aboutLabel.setText( ApplicationController.applicationName + " " + ApplicationController.applicationVersion );
         aboutLabel.setFont( ApplicationController.defaultTitleFont );
         aboutLabel.setForeground( Color.BLACK );
         

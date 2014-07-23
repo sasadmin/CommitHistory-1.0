@@ -26,6 +26,7 @@ public class ApplicationController
     private static ApplicationController defaultInstance;
 
     public static final String applicationName = "Commit History";
+    public static final String applicationVersion = "1.1";
     
     public static final Font defaultFont = new Font( "monospaced", Font.BOLD, 12 );
     public static final Font defaultNames = new Font( "monospaced", Font.PLAIN, 13 );
@@ -242,10 +243,18 @@ public class ApplicationController
      */
     public void openFile( String ticket )
     {
+        openFile( getFile( ticket ) );
+    }
+    
+    /**
+     * openFile
+     * 
+     * @param file File
+     */
+    public void openFile( File file )
+    {
         try
         {
-            File file = getFile( ticket );
-
             if ( file.exists())
             {
                 if ( Desktop.isDesktopSupported() )

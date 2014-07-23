@@ -24,10 +24,14 @@ public class PopupMenu
         ticketQueryItem.setText( "Consultar Ticket" );
         ticketQueryItem.setIcon( IconFactory.getIcon( "/resources/ticket.png", 20 ) );
         
+        textQueryItem.setText( "Consultar Texto" );
+        textQueryItem.setIcon( IconFactory.getIcon( "/resources/ticket.png", 20 ) );
+        
         configItem.setText( "Configurações" );
         configItem.setIcon( IconFactory.getIcon( "/resources/config.png", 20 ) );
         
         add( ticketQueryItem );
+        add( textQueryItem );
         add( configItem );
         
         ticketQueryItem.addActionListener( new ActionListener()
@@ -36,6 +40,15 @@ public class PopupMenu
             public void actionPerformed( ActionEvent e )
             {
                 ApplicationController.getInstance().openWindow( new TicketQueryWindow() );
+            }
+        } );
+        
+        textQueryItem.addActionListener( new ActionListener()
+        {
+            @Override
+            public void actionPerformed( ActionEvent e )
+            {
+                ApplicationController.getInstance().openWindow( new TextQueryWindow() );
             }
         } );
         
@@ -50,5 +63,6 @@ public class PopupMenu
     }
     
     private JMenuItem ticketQueryItem = new JMenuItem();
+    private JMenuItem textQueryItem = new JMenuItem();
     private JMenuItem configItem = new JMenuItem();
 }
