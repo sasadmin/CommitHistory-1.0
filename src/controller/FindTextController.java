@@ -149,7 +149,7 @@ public class FindTextController
     {
         if ( ! content.trim().isEmpty() )
         {
-            if ( content.contains( textFind ) )
+            if ( content.toLowerCase().contains( textFind.toLowerCase() ) )
             {
                 found.add( content );
             }
