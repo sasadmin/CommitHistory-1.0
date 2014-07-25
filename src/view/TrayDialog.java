@@ -273,7 +273,7 @@ public class TrayDialog
     private JLabel applicationNameLabel = new JLabel();
     
     private TicketField ticketField = new TicketField();
-    private JTextField revisionField = new JTextField();
+    private DigitField revisionField = new DigitField();
     private VersionField versionField = new VersionField();
     
     private MinimizeButton minimizeButton = new MinimizeButton();
