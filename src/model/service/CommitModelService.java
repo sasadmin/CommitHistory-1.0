@@ -7,6 +7,7 @@ import data.Commit;
 import java.io.File;
 import model.CommitModel;
 import controller.SvnController;
+import util.Display;
 
 /**
  *
@@ -44,15 +45,20 @@ public class CommitModelService
             work.mkdir();
         }
         
-        File file = ApplicationController.getInstance().getFile( commit.getTicket(), true );
-
-        String text = FileUtilities.loadText( file );
-
         String msgCommit = SvnController.obtainLogCommit( commit );
 
         if ( !msgCommit.trim().isEmpty() )
         {
+            File file = ApplicationController.getInstance().getFile( commit.getTicket(), true );
+
+            String text = FileUtilities.loadText( file );
+
             FileUtilities.saveText( file, text + msgCommit + "\n" );
+        }
+                
+        else
+        {
+            Display.info( "Não foi encontrada a revisão" );
         }
     }
 }

@@ -26,7 +26,7 @@ public class ApplicationController
     private static ApplicationController defaultInstance;
 
     public static final String applicationName = "Commit History";
-    public static final String applicationVersion = "1.1";
+    public static final String applicationVersion = "1.2";
     
     public static final Font defaultFont = new Font( "monospaced", Font.BOLD, 12 );
     public static final Font defaultNames = new Font( "monospaced", Font.PLAIN, 13 );

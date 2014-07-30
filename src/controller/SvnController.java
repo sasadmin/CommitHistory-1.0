@@ -23,11 +23,40 @@ public class SvnController
      */
     public static String obtainLogCommit( Commit commit ) throws Exception
     {
-        String[] cmdWork =       { "svn", "log", "-r", commit.getRevision(), "-v", WORK };
-        String[] cmdQuarentine = { "svn", "log", "-r", commit.getRevision(), "-v", QUARENTINE };
-        String[] cmdReleases =   { "svn", "log", "-r", commit.getRevision(), "-v", RELEASES };
+        String value = "";
         
-        return obtainLogCommit( cmdWork ) + obtainLogCommit( cmdQuarentine ) + obtainLogCommit( cmdReleases );
+        String repository1 = ConfigurationManager.getInstance().getProperty( "repository.1", WORK );
+        String repository2 = ConfigurationManager.getInstance().getProperty( "repository.2", QUARENTINE );
+        String repository3 = ConfigurationManager.getInstance().getProperty( "repository.3", RELEASES );
+        String repository4 = ConfigurationManager.getInstance().getProperty( "repository.4" );
+        String repository5 = ConfigurationManager.getInstance().getProperty( "repository.5" );
+
+        if ( repository1 != null && !repository1.isEmpty() )
+        {
+            value += obtainLogCommit( commit, repository1 );
+        }
+        
+        if ( repository2 != null && !repository2.isEmpty() )
+        {
+            value += obtainLogCommit( commit, repository2 );
+        }
+        
+        if ( repository3 != null && !repository3.isEmpty() )
+        {
+            value += obtainLogCommit( commit, repository3 );
+        }
+        
+        if ( repository4 != null && !repository4.isEmpty() )
+        {
+            value += obtainLogCommit( commit, repository4 );
+        }
+        
+        if ( repository5 != null && !repository5.isEmpty() )
+        {
+            value += obtainLogCommit( commit, repository5 );
+        }
+        
+        return value;
     }
     
     /**
@@ -37,8 +66,10 @@ public class SvnController
      * @return String
      * @throws Exception
      */
-    public static String obtainLogCommit( String[] cmd ) throws Exception
+    public static String obtainLogCommit( Commit commit, String repository ) throws Exception
     {
+        String[] cmd = new String[]{ "svn", "log", "-r", commit.getRevision(), "-v", repository };
+                
         String result = "";
         
         BufferedReader in = null;
