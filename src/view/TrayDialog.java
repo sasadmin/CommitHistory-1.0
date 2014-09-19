@@ -25,6 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JWindow;
+import util.ApplicationUtilities;
 
 /**
  *
@@ -247,6 +248,15 @@ public class TrayDialog
                 }
             }
         } );
+        
+        ticketField.addKeyListener( new KeyAdapter() 
+        {
+            @Override
+            public void keyReleased( KeyEvent e )
+            {
+                ApplicationUtilities.getInstance().setTicket( ticketField.getText() );
+            }
+        });
         
         versionField.addKeyListener( new KeyAdapter() 
         {

@@ -16,6 +16,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import util.ApplicationUtilities;
 
 /**
  *
@@ -55,6 +56,9 @@ public class TicketQueryWindow
         copyButton.setToolTipText( "Copiar para área de transferência" );
         copyButton.setForeground( Color.BLACK );
         copyButton.setFont( ApplicationController.defaultFont );
+        
+        ticketField.requestFocus();
+        ticketField.setText( ApplicationUtilities.getInstance().getTicket() );
         
         ticketField.addFocusListener( new FocusAdapter() 
         {
